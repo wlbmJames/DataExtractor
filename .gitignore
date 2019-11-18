@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/GDPictureLibs/Xceed.Wpf.Toolkit.dll
+/GDPictureLibs/GdPicture.NET.9.PDF.dll
+/GDPictureLibs/GdPicture.NET.9.dll
