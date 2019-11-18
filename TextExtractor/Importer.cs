@@ -10,7 +10,7 @@ using GdPicture9;
 using System.Diagnostics;
 using System.Windows;
 
-namespace TextAnalyzer
+namespace TextExtractor
 {
     public class Importer
     {
