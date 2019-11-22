@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace TextExtractor
 {
-    public class Importer
+    public class DigitalPdfExtractor: IExtractor
     {
         #region Declaration Area
         public class KeyVal<Key, Val>
@@ -37,7 +37,7 @@ namespace TextExtractor
         #endregion
 
         #region Constructors
-        public Importer()
+        internal DigitalPdfExtractor()
         {
             LicenseManager _manager = new LicenseManager();
             _manager.RegisterKEY("411807659822389691114151231799986");
@@ -80,28 +80,38 @@ namespace TextExtractor
         #endregion
 
         #region Methods
-        public ATAPY.Document.Data.Core.Document LoadFromFile(File SourceFile)
+        public Document GetDocument(File SourceFile)
+        {
+            return GetDocument(SourceFile, "eng");
+        }
+        public Document GetDocument(File SourceFile, string language)
         {
             Trace.Assert(SourceFile != null);
-            try {
-                if (!SourceFile.Exists) {
+            try
+            {
+                if (!SourceFile.Exists)
+                {
                     throw new Warning("Source file does not exist.\r\nSource file - " + SourceFile.FullPath);
                 }
                 Document Doc = new Document();
                 Doc.SourceFormat = E_SourceFormat.PDF;
                 Doc.SourceFile = SourceFile.Clone();
-                using (GdPicturePDF SourcePDF = new GdPicturePDF()) {
+                using (GdPicturePDF SourcePDF = new GdPicturePDF())
+                {
                     //var PassRes = SourcePDF.SetPassword("test");
                     var Result = SourcePDF.LoadFromFile(SourceFile.FullPath, false);
-                    if (Result != GdPictureStatus.OK) {
+                    if (Result != GdPictureStatus.OK)
+                    {
                         throw new Warning("Cannot open source file.\r\nSource file -" + SourceFile.FullPath);
                     }
-                    if (SourcePDF.IsEncrypted()) {
+                    if (SourcePDF.IsEncrypted())
+                    {
                         throw new Warning("Source PDF file is encrypted.");
                     }
                     int PagesCount = SourcePDF.GetPageCount();
                     //var PdfVersion = SourcePDF.GetVersion();
-                    for (int i = 1; i <= PagesCount; i++) {
+                    for (int i = 1; i <= PagesCount; i++)
+                    {
                         SourcePDF.SelectPage(i);
                         //string aaa = SourcePDF.GetPageMetadata();
                         //string PageText = SourcePDF.GetPageText();
@@ -122,14 +132,18 @@ namespace TextExtractor
                         Page.Bound = new Rect(0, 0, Width, Height);
                         Doc.Pages.Add(Page);
                         FillPageText(PageTextWCoords, SourcePDF, Page);
-                        if (FixWordsAreas || ExtraTextCheck) {
-                            using (GdPictureImaging Imaging = new GdPictureImaging()) {
+                        if (FixWordsAreas || ExtraTextCheck)
+                        {
+                            using (GdPictureImaging Imaging = new GdPictureImaging())
+                            {
                                 CleanPage(SourcePDF);
                                 int RenderedPageId = SourcePDF.RenderPageToGdPictureImageEx((float)DEFAULT_RENDER_DPI, true, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
-                                if (FixWordsAreas) {
+                                if (FixWordsAreas)
+                                {
                                     CorrectTextCoordinates(Page, RenderedPageId);
                                 }
-                                if (ExtraTextCheck) {
+                                if (ExtraTextCheck)
+                                {
                                     CheckTextWithRecognition(Page, RenderedPageId);
                                 }
                                 Imaging.ReleaseGdPictureImage(RenderedPageId);
@@ -148,10 +162,13 @@ namespace TextExtractor
                     SourcePDF.CloseDocument();
                 }
                 return Doc;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 GlobalObjects.Log.WriteError(ex);
                 throw;
             }
+
         }
         public ATAPY.Common.IO.Files CreatePageFiles(ATAPY.Common.IO.File PdfFile)
         {
