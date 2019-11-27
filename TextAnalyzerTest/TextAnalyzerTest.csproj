@@ -75,6 +75,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAnalyzer\DataAnalyzer.csproj">
+      <Project>{29f4da05-8200-48af-8393-55ee45526d4f}</Project>
+      <Name>DataAnalyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TextExtractor\TextExtractor.csproj">
       <Project>{de68b7dd-f226-48cc-b1e3-57d146775230}</Project>
       <Name>TextExtractor</Name>
