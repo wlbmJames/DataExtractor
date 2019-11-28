@@ -2,6 +2,7 @@
 using ATAPY.Document.Data.Core;
 using TextExtractor;
 using DataAnalyzer;
+using System.Collections.Generic;
 
 namespace TextAnalyzerTest
 {
@@ -16,10 +17,15 @@ namespace TextAnalyzerTest
             dClassifier.AddClass(DocClassesCollector.Tawunia());
             var docs = dClassifier.Classify(document);
             var analyzer = new Analyzer();
+            var models = new List<ResultModel>();
             foreach (var doc in docs)
             {
                 analyzer.AnalyzeDocument(doc);
+                var model = ResultHandler.GetResultModel(doc);
+                models.Add(model);
             }
+            var resPath = @"D:\Projects\TextLayerAnalyzer\TawunyaResult.xml";
+            ResultHandler.SaveModel(models, resPath);
         }
 
         private static Document GetDoc()

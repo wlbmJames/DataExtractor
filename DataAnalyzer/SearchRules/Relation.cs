@@ -11,7 +11,7 @@ namespace DataAnalyzer.SearchRules
         public Relation()
         {
             Type = RelationType.None;
-            Offset = 0;
+            Offset = 1;
         }
         public RelationType Type { get; set; }
         public int Offset { get; set; }

@@ -13,10 +13,12 @@ namespace DataAnalyzer.Core
             HeaderRules = new List<Rule>();
             FooterRules = new List<Rule>();
             DataRules = new List<Rule>();
+            PagesOnOriginalImage = new List<int>();
         }
 
         public string Title { get; private set; }
         public int MaxPagesCount { get; set; }
+        public List<int> PagesOnOriginalImage { get; set; }
         public List<Rule> HeaderRules { get; private set; }
         public List<Rule> FooterRules { get; private set; }
         public List<Rule> DataRules { get; private set; }
@@ -35,7 +37,6 @@ namespace DataAnalyzer.Core
             FooterRules.Add(rule);
             rule.Parent = FooterRules;
         }
-
         public object Clone()
         {
             var head = CloneWDependencies(HeaderRules);
@@ -54,11 +55,16 @@ namespace DataAnalyzer.Core
             foreach (var rule in rules)
             {
                 if (rule.DependencyRule == null)
-                    result.Add((Rule)rule.Clone());
+                {
+                    var clonedRule = (Rule)rule.Clone();
+                    clonedRule.Parent = result;
+                    result.Add(clonedRule);
+                }
                 else
                 {
                     var depName = rule.DependencyRule.Title;
                     var clonedRule = (Rule)rule.Clone();
+                    clonedRule.Parent = result;
                     clonedRule.DependencyRule = result.FirstOrDefault(r => r.Title == depName);
                     result.Add(clonedRule);
                 }

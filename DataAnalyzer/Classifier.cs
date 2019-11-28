@@ -35,6 +35,7 @@ namespace DataAnalyzer
             ClassifiedDocument currentDoc = new ClassifiedDocument();
             foreach (var page in document.Pages)
             {
+                var currentPage = page.Index + 1;
                 if(_docStartedObject.DocStarted)
                 {
                     if (CheckFooter(page))
@@ -61,7 +62,7 @@ namespace DataAnalyzer
                             currentDoc.Document.Pages.Add(page);
                         }
                     }
-
+                    currentDoc.DocClass.PagesOnOriginalImage.Add(currentPage);
                 }
                 else
                 {
@@ -75,6 +76,7 @@ namespace DataAnalyzer
                         currentDoc.Document = new Document();
                         currentDoc.Document.Pages.Add(page);
                         result.Add(currentDoc);
+                        currentDoc.DocClass.PagesOnOriginalImage.Add(currentPage);
                     }
                 }
             }
@@ -110,12 +112,13 @@ namespace DataAnalyzer
                 foreach (var rule in dClass.HeaderRules)
                 {
                     rule.Check(page);
-                    var result = rule.SearchResult;
-                    if (!ResultSuccess(result) && rule.RuleBinding == RuleBinding.Required
-                        || ResultSuccess(result) && rule.RuleBinding == RuleBinding.Prohibited)
+                    var sResult = rule.SearchResult;
+                    if (!ResultSuccess(sResult) && rule.RuleBinding == RuleBinding.Required
+                        || ResultSuccess(sResult) && rule.RuleBinding == RuleBinding.Prohibited)
                         return null;
                 }
-                return (DocClass)dClass.Clone();
+                var result = (DocClass)dClass.Clone();
+                return result;
             }
             return null;
         }

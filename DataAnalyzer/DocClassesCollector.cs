@@ -139,7 +139,49 @@ namespace DataAnalyzer
             ExpiryData.TextToSearch = @"\d{2,4}-\d{2}-\d{2,4}";
             ExpiryData.SearchArea = new System.Windows.Rect(0, 0, 1, 1);
 
+            //-----------------------------------TABLE
+            var stPeriod = new StaticTextRule("Period", RuleBinding.Required);
+            stPeriod.TextToSearch = "Period";
+            result.AddDataRule(stPeriod);
+            stPeriod.DependencyRule = Expiry;
+            var daPeriod = new DependencyArea();
+            stPeriod.DependencyArea = daPeriod;
+            daPeriod.Below.Type = RelationType.Bot;
+            daPeriod.Below.Offset = 100;
+            daPeriod.RightOf.Type = RelationType.Left;
+            daPeriod.LeftOf.Type = RelationType.Right;
+            daPeriod.LeftOf.Offset = 200;
+            daPeriod.Above.Type = RelationType.Bot;
+            daPeriod.Above.Offset = 500;
 
+            var csPeriod = new CharacterStringRule("PeriodData", RuleBinding.Required);
+            csPeriod.TextToSearch = @"[a-zA-Z\s\d]+";
+            result.AddDataRule(csPeriod);
+            csPeriod.DependencyRule = stPeriod;
+            var daPeriodData = new DependencyArea();
+            csPeriod.DependencyArea = daPeriodData;
+            daPeriodData.Below.Type = RelationType.Bot;
+            daPeriodData.Above.Type = RelationType.Bot;
+            daPeriodData.Above.Offset = 100;
+            daPeriodData.LeftOf.Type = RelationType.Right;
+            daPeriodData.LeftOf.Offset = 150;
+            daPeriodData.RightOf.Type = RelationType.Left;
+            daPeriodData.RightOf.Offset = -100;
+
+            var rgPeriodData = new RepeatingCSRule("PreiodData_0", RuleBinding.Required);
+            rgPeriodData.TextToSearch = @"\d{2}\/\d{4}";
+            result.AddDataRule(rgPeriodData);
+            rgPeriodData.DependencyRule = stPeriod;
+            var daRgPeriodData = new DependencyArea();
+            daRgPeriodData.Below.Type = RelationType.Bot;
+            daRgPeriodData.Below.Offset = 20;
+            daRgPeriodData.LeftOf.Type = RelationType.Right;
+            daRgPeriodData.LeftOf.Offset = 200;
+            daRgPeriodData.RightOf.Type = RelationType.Right;
+            daRgPeriodData.RightOf.Offset = 100;
+            daRgPeriodData.Above.Type = RelationType.Bot;
+            daRgPeriodData.Above.Offset = 70;
+            rgPeriodData.DependencyArea = daRgPeriodData;
         }
 
         private static void SecondPageFields(DocClass result)

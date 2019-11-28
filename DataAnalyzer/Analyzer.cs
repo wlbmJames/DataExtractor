@@ -17,12 +17,12 @@ namespace DataAnalyzer
                 throw new Exception("ftw");
             foreach (var page in document.Document.Pages)
             {
-                
-                foreach (var rule in document.DocClass.DataRules)
+                for (int i = 0; i < document.DocClass.DataRules.Count; i++)
                 {
+                    var rule = document.DocClass.DataRules[i];
                     if (rule.SearchResult != null && rule.SearchResult.IsFound)
                         continue;
-                    rule.Check(page, page.Index);
+                    rule.Check(page, document.DocClass.PagesOnOriginalImage[page.Index]);
                 }
             }
         }
