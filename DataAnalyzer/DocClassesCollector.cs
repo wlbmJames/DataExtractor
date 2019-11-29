@@ -1,10 +1,12 @@
-﻿using DataAnalyzer.Core;
+﻿using System;
+using DataAnalyzer.Core;
 using DataAnalyzer.SearchRules;
 
 namespace DataAnalyzer
 {
     public class DocClassesCollector
     {
+        #region Tawunia
         public static DocClass Tawunia()
         {
             var result = new DocClass("Tawunia", 2);
@@ -13,6 +15,11 @@ namespace DataAnalyzer
             result.AddHeaderRule(crNumRule);
             crNumRule.TextToSearch = "CR number";
             crNumRule.SearchArea = new System.Windows.Rect(0, 0, 1000, 1000);
+
+            var stBupaArabia = new StaticTextRule("Bupa Arabia", RuleBinding.Prohibited);
+            result.AddHeaderRule(stBupaArabia);
+            stBupaArabia.TextToSearch = "Bupa Arabia";
+            stBupaArabia.SearchArea = new System.Windows.Rect(0, 0, 2000, 3000);
 
             var InceptionRule = new StaticTextRule("Inception", RuleBinding.Required);
             result.AddHeaderRule(InceptionRule);
@@ -107,7 +114,7 @@ namespace DataAnalyzer
             crNumData.TextToSearch = @"\d{6,12}";
             crNumData.SearchArea = new System.Windows.Rect(0, 0, 1000, 1000);
 
-            var InceptionData = new CharacterStringRule("InceptionData", RuleBinding.Required);
+            var InceptionData = new CharacterStringRule("InceptionDate", RuleBinding.Required);
             result.AddDataRule(InceptionData);
             InceptionData.DependencyRule = InterceptInit;
             var InceptionDataDR = new DependencyArea();
@@ -123,7 +130,7 @@ namespace DataAnalyzer
             InceptionData.TextToSearch = @"\d{2,4}-\d{2}-\d{2,4}";
             InceptionData.SearchArea = new System.Windows.Rect(0, 0, 1000, 1000);
 
-            var ExpiryData = new CharacterStringRule("ExpiryData", RuleBinding.Required);
+            var ExpiryData = new CharacterStringRule("ExpiryDate", RuleBinding.Required);
             result.AddDataRule(ExpiryData);
             ExpiryData.DependencyRule = Expiry;
             var EpiryDataDR = new DependencyArea();
@@ -168,7 +175,7 @@ namespace DataAnalyzer
             daPeriodData.RightOf.Type = RelationType.Left;
             daPeriodData.RightOf.Offset = -100;
 
-            var rgPeriodData = new RepeatingCSRule("PreiodData_0", RuleBinding.Required);
+            var rgPeriodData = new RepeatingCSRule("LastYear_MonthlyClaim_0", RuleBinding.Required);
             rgPeriodData.TextToSearch = @"\d{2}\/\d{4}";
             result.AddDataRule(rgPeriodData);
             rgPeriodData.DependencyRule = stPeriod;
@@ -182,6 +189,21 @@ namespace DataAnalyzer
             daRgPeriodData.Above.Type = RelationType.Bot;
             daRgPeriodData.Above.Offset = 70;
             rgPeriodData.DependencyArea = daRgPeriodData;
+
+            var rgPeriodNumOfLives = new RepeatingCSRule("LastYear_NumberOfLives_0", RuleBinding.Required);
+            rgPeriodNumOfLives.TextToSearch = @"\d{1,4}";
+            result.AddDataRule(rgPeriodNumOfLives);
+            rgPeriodNumOfLives.DependencyRule = stPeriod;
+            var dargPeriodNumOfLives = new DependencyArea();
+            dargPeriodNumOfLives.Below.Type = RelationType.Bot;
+            dargPeriodNumOfLives.Below.Offset = 20;
+            dargPeriodNumOfLives.LeftOf.Type = RelationType.Right;
+            dargPeriodNumOfLives.LeftOf.Offset = 350;
+            dargPeriodNumOfLives.RightOf.Type = RelationType.Right;
+            dargPeriodNumOfLives.RightOf.Offset = 250;
+            dargPeriodNumOfLives.Above.Type = RelationType.Bot;
+            dargPeriodNumOfLives.Above.Offset = 70;
+            rgPeriodNumOfLives.DependencyArea = dargPeriodNumOfLives;
         }
 
         private static void SecondPageFields(DocClass result)
@@ -260,10 +282,203 @@ namespace DataAnalyzer
             inpatientAmt.TextToSearch = @"(\d+[\.,])+(\d{2})";
             inpatientAmt.SearchArea = new System.Windows.Rect(0, 0, 1, 1);
         }
+        #endregion Tawunia
+        #region Bupa
+        public static DocClass Bupa()
+        {
+            var result = new DocClass("Bupa", 4);
 
+            var stBupaArabia = new StaticTextRule("BupaArabia", RuleBinding.Required);
+            stBupaArabia.TextToSearch = "Bupa Arabia for Cooperative Insurance";
+            result.AddHeaderRule(stBupaArabia);
+            stBupaArabia.SearchArea = new System.Windows.Rect(0,0,2000,500);
+
+            var stSignature = new StaticTextRule("SignatureNStamp", RuleBinding.Required);
+            stSignature.TextToSearch = "Signature & Stamp";
+            result.AddFooterRule(stSignature);
+            stSignature.SearchArea = new System.Windows.Rect(0,0,1500,3000);
+
+            AddHeadData(result);
+            AddTableData(result);
+
+            return result;
+        }
+
+        private static void AddHeadData(DocClass result)
+        {
+            var stInceptionDate = new StaticTextRule("stInceptionDate", RuleBinding.Required);
+            stInceptionDate.TextToSearch = "Inception Date";
+            stInceptionDate.SearchArea = new System.Windows.Rect(0, 0, 1000, 1000);
+            result.AddDataRule(stInceptionDate);
+
+            var stExpiryDate = new StaticTextRule("stExpiryDate", RuleBinding.Required);
+            stExpiryDate.TextToSearch = "Expiry Date";
+            stExpiryDate.SearchArea = new System.Windows.Rect(0, 0, 1000, 1000);
+            result.AddDataRule(stExpiryDate);
+
+            var csInceptionDate = new CharacterStringRule("InceptionDate", RuleBinding.Required);
+            csInceptionDate.TextToSearch = @"[a-zA-Z]{3,4}\s?\d{1,2}[,\.]?\s?\d{4}";
+            csInceptionDate.DependencyRule = stInceptionDate;
+            result.AddDataRule(csInceptionDate);
+            var dacsInceptionDate = new DependencyArea();
+            dacsInceptionDate.Below.Type = RelationType.Top;
+            dacsInceptionDate.Below.Offset = -5;
+            dacsInceptionDate.Above.Type = RelationType.Bot;
+            dacsInceptionDate.Above.Offset = 5;
+            dacsInceptionDate.RightOf.Type = RelationType.Right;
+            dacsInceptionDate.RightOf.Offset = 100;
+            dacsInceptionDate.LeftOf.Type = RelationType.Right;
+            dacsInceptionDate.LeftOf.Offset = 1100;
+            csInceptionDate.DependencyArea = dacsInceptionDate;
+
+            var csExpiryDate = new CharacterStringRule("ExpiryDate", RuleBinding.Required);
+            csExpiryDate.TextToSearch = @"[a-zA-Z]{3,4}\s?\d{1,2}[,\.]?\s?\d{4}";
+            csExpiryDate.DependencyRule = stExpiryDate;
+            result.AddDataRule(csExpiryDate);
+            var dacsExpiryDate = new DependencyArea();
+            dacsExpiryDate.Below.Type = RelationType.Top;
+            dacsExpiryDate.Below.Offset = -5;
+            dacsExpiryDate.Above.Type = RelationType.Bot;
+            dacsExpiryDate.Above.Offset = 5;
+            dacsExpiryDate.RightOf.Type = RelationType.Right;
+            dacsExpiryDate.RightOf.Offset = 100;
+            dacsExpiryDate.LeftOf.Type = RelationType.Right;
+            dacsExpiryDate.LeftOf.Offset = 1100;
+            csExpiryDate.DependencyArea = dacsExpiryDate;
+        }
+
+        private static void AddTableData(DocClass result)
+        {
+            Get2YearPrior(result);
+
+            GetYearPrior(result);
+
+            GetLastYear(result);
+        }
+
+        private static void GetLastYear(DocClass result)
+        {
+            var stLastYear = new StaticTextRule("LastYear", RuleBinding.Required);
+            stLastYear.TextToSearch = "Policy Year";
+            stLastYear.SearchArea = new System.Windows.Rect(0, 1500, 1000, 3000);
+            result.AddDataRule(stLastYear);
+
+            var rgcsMonthlyClaims = new RepeatingCSRule("LastYear_MonthlyClaim_0", RuleBinding.Required);
+            rgcsMonthlyClaims.TextToSearch = @"\d{3,7}";
+            rgcsMonthlyClaims.DependencyRule = stLastYear;
+            rgcsMonthlyClaims.InterlineSpaces = 30;
+            result.AddDataRule(rgcsMonthlyClaims);
+            var dargMonthlyClaims = new DependencyArea();
+            dargMonthlyClaims.Below.Type = RelationType.Bot;
+            dargMonthlyClaims.Below.Offset = 10;
+            dargMonthlyClaims.LeftOf.Type = RelationType.Right;
+            dargMonthlyClaims.LeftOf.Offset = 20;
+            dargMonthlyClaims.RightOf.Type = RelationType.Left;
+            //dargMonthlyClaims.RightOf.Offset = 250;
+            dargMonthlyClaims.Above.Type = RelationType.Bot;
+            dargMonthlyClaims.Above.Offset = 70;
+            rgcsMonthlyClaims.DependencyArea = dargMonthlyClaims;
+
+            var rgcsNumberOfLives = new RepeatingCSRule("LastYear_NumberOfLives_0", RuleBinding.Required);
+            rgcsNumberOfLives.TextToSearch = @"[\da-zA-Z]{1,3}";
+            rgcsNumberOfLives.InterlineSpaces = 30;
+            rgcsNumberOfLives.DependencyRule = stLastYear;
+            result.AddDataRule(rgcsNumberOfLives);
+            var dargNumberOfLives = new DependencyArea();
+            dargNumberOfLives.Below.Type = RelationType.Bot;
+            dargNumberOfLives.Below.Offset = 10;
+            dargNumberOfLives.LeftOf.Type = RelationType.Right;
+            dargNumberOfLives.LeftOf.Offset = 250;
+            dargNumberOfLives.RightOf.Type = RelationType.Right;
+            dargNumberOfLives.RightOf.Offset = 150;
+            dargNumberOfLives.Above.Type = RelationType.Bot;
+            dargNumberOfLives.Above.Offset = 70;
+            rgcsNumberOfLives.DependencyArea = dargNumberOfLives;
+        }
+
+        private static void GetYearPrior(DocClass result)
+        {
+            var stYearPrior = new StaticTextRule("YearPrior", RuleBinding.Required);
+            stYearPrior.TextToSearch = "Policy Year";
+            stYearPrior.SearchArea = new System.Windows.Rect(0, 900, 1000, 2000);
+            result.AddDataRule(stYearPrior);
+
+            var rgcsMonthlyClaims = new RepeatingCSRule("YearPrior_MonthlyClaim_0", RuleBinding.Required);
+            rgcsMonthlyClaims.TextToSearch = @"\d{3,7}";
+            rgcsMonthlyClaims.DependencyRule = stYearPrior;
+            rgcsMonthlyClaims.InterlineSpaces = 30;
+            result.AddDataRule(rgcsMonthlyClaims);
+            var dargMonthlyClaims = new DependencyArea();
+            dargMonthlyClaims.Below.Type = RelationType.Bot;
+            dargMonthlyClaims.Below.Offset = 10;
+            dargMonthlyClaims.LeftOf.Type = RelationType.Right;
+            dargMonthlyClaims.LeftOf.Offset = 20;
+            dargMonthlyClaims.RightOf.Type = RelationType.Left;
+            //dargMonthlyClaims.RightOf.Offset = 250;
+            dargMonthlyClaims.Above.Type = RelationType.Bot;
+            dargMonthlyClaims.Above.Offset = 70;
+            rgcsMonthlyClaims.DependencyArea = dargMonthlyClaims;
+
+            var rgcsNumberOfLives = new RepeatingCSRule("YearPrior_NumberOfLives_0", RuleBinding.Required);
+            rgcsNumberOfLives.TextToSearch = @"[\da-zA-Z]{1,3}";
+            rgcsNumberOfLives.InterlineSpaces = 30;
+            rgcsNumberOfLives.DependencyRule = stYearPrior;
+            result.AddDataRule(rgcsNumberOfLives);
+            var dargNumberOfLives = new DependencyArea();
+            dargNumberOfLives.Below.Type = RelationType.Bot;
+            dargNumberOfLives.Below.Offset = 10;
+            dargNumberOfLives.LeftOf.Type = RelationType.Right;
+            dargNumberOfLives.LeftOf.Offset = 250;
+            dargNumberOfLives.RightOf.Type = RelationType.Right;
+            dargNumberOfLives.RightOf.Offset = 150;
+            dargNumberOfLives.Above.Type = RelationType.Bot;
+            dargNumberOfLives.Above.Offset = 70;
+            rgcsNumberOfLives.DependencyArea = dargNumberOfLives;
+        }
+
+        private static void Get2YearPrior(DocClass result)
+        {
+            var st2YPrior = new StaticTextRule("2YearsPrior", RuleBinding.Required);
+            st2YPrior.TextToSearch = "Policy Year";
+            st2YPrior.SearchArea = new System.Windows.Rect(0, 0, 1000, 1000);
+            result.AddDataRule(st2YPrior);
+
+            var rgcsMonthlyClaims = new RepeatingCSRule("2YPrior_MonthlyClaim_0", RuleBinding.Required);
+            rgcsMonthlyClaims.TextToSearch = @"\d{3,7}";
+            rgcsMonthlyClaims.DependencyRule = st2YPrior;
+            rgcsMonthlyClaims.InterlineSpaces = 30;
+            result.AddDataRule(rgcsMonthlyClaims);
+            var dargMonthlyClaims = new DependencyArea();
+            dargMonthlyClaims.Below.Type = RelationType.Bot;
+            dargMonthlyClaims.Below.Offset = 10;
+            dargMonthlyClaims.LeftOf.Type = RelationType.Right;
+            dargMonthlyClaims.LeftOf.Offset = 50;
+            dargMonthlyClaims.RightOf.Type = RelationType.Left;
+            //dargMonthlyClaims.RightOf.Offset = 250;
+            dargMonthlyClaims.Above.Type = RelationType.Bot;
+            dargMonthlyClaims.Above.Offset = 70;
+            rgcsMonthlyClaims.DependencyArea = dargMonthlyClaims;
+
+            var rgcsNumberOfLives = new RepeatingCSRule("2YPrior_NumberOfLives_0", RuleBinding.Required);
+            rgcsNumberOfLives.TextToSearch = @"[\da-zA-Z]{1,3}";
+            rgcsNumberOfLives.DependencyRule = st2YPrior;
+            rgcsNumberOfLives.InterlineSpaces = 30;
+            result.AddDataRule(rgcsNumberOfLives);
+            var dargNumberOfLives = new DependencyArea();
+            dargNumberOfLives.Below.Type = RelationType.Bot;
+            dargNumberOfLives.Below.Offset = 10;
+            dargNumberOfLives.LeftOf.Type = RelationType.Right;
+            dargNumberOfLives.LeftOf.Offset = 320;
+            dargNumberOfLives.RightOf.Type = RelationType.Right;
+            dargNumberOfLives.RightOf.Offset = 200;
+            dargNumberOfLives.Above.Type = RelationType.Bot;
+            dargNumberOfLives.Above.Offset = 70;
+            rgcsNumberOfLives.DependencyArea = dargNumberOfLives;
+        }
+        #endregion Bupa
         public void xxx()
         {
-
+ 
         }
     }
 }
