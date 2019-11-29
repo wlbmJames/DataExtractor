@@ -22,7 +22,7 @@ namespace DataAnalyzer.Extensions
                 while (Match.Success)
                 {
                     string FoundString = Match.Value;
-                    var FoundWords = line.GetWordsMatchingString(FoundString);
+                    var FoundWords = GetWordsMatchingString(wordsInArea,strLine,FoundString);
                     result.Add(FoundWords);
                     Match = Match.NextMatch();
                 }
@@ -30,5 +30,34 @@ namespace DataAnalyzer.Extensions
             }
             return result;
         }
+
+        private static Words GetWordsMatchingString(List<Word> words, string fullText, string SearchString)
+        {
+            if (!fullText.Contains(SearchString))
+            {
+                return null;
+            }
+            int StartIndex = fullText.IndexOf(SearchString);
+            int CheckedLength = 0;
+            Words Ret = new Words();
+            Ret.Tag = SearchString;
+            for (int i = 0; i < words.Count; i++)
+            {
+                CheckedLength += words[i].Text.Length;
+                if (CheckedLength > StartIndex)
+                {
+                    if (StartIndex + SearchString.Length > CheckedLength - words[i].Text.Length)
+                    {
+                        Ret.Add(words[i]);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            return Ret;
+        }
+
     }
 }

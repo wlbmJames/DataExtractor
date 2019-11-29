@@ -8,6 +8,7 @@ namespace DataAnalyzer.SearchRules
     public class RepeatingCSRule : Rule
     {
         public bool HasAnotherInstance { get; set; } = false;
+        public int InterlineSpaces { get; set; } = 0;
         public RepeatingCSRule PreviousInstance { get; set; } = null;
         public RepeatingCSRule(string title, RuleBinding ruleBinding) : this(title, ruleBinding, new Rect())
         {
@@ -21,11 +22,14 @@ namespace DataAnalyzer.SearchRules
             Rect rect;
             if (PreviousInstance != null)
             {
+                if (PreviousInstance.SearchResult.PageNumber != pageNumber)
+                    return;
                 var prevRect = PreviousInstance.SearchResult.Area;
                 var left = prevRect.Left - 10;
                 var top = prevRect.Bottom + 1;
                 var right = prevRect.Right + 10;
-                var bot = prevRect.Bottom + 100;
+                var space = InterlineSpaces == 0 ? 100 : InterlineSpaces;
+                var bot = prevRect.Bottom + space;
                 var leftTop = new Point(left, top);
                 var rightBot = new Point(right, bot);
                 rect = new Rect(leftTop, rightBot);
@@ -71,18 +75,30 @@ namespace DataAnalyzer.SearchRules
             var substrings = this.Title.Split('_');
             if (substrings.Length == 1)
                 newTitle = this.Title + "_0";
-            else
+            else if (substrings.Length == 2)
             {
                 var index = int.Parse(substrings[1]);
                 index++;
                 newTitle = substrings[0] + "_" + index;
             }
+            else
+            {
+                var index = int.Parse(substrings[substrings.Length - 1]);
+                index++;
+                for (int i = 0; i < substrings.Length - 1; i++)
+                {
+                    newTitle = newTitle + substrings[i] + "_";
+                }
+                newTitle = newTitle + index;
+            }
             return new RepeatingCSRule(newTitle, RuleBinding, SearchArea)
             {
                 TextToSearch = this.TextToSearch,
                 PreviousInstance = this,
-                Parent = this.Parent
-        };
+                Parent = this.Parent,
+                InterlineSpaces = this.InterlineSpaces
+                
+            };
         }
         public override object Clone()
         {
@@ -90,7 +106,8 @@ namespace DataAnalyzer.SearchRules
             {
                 SearchResult = (SearchResult)this.SearchResult?.Clone(),
                 TextToSearch = this.TextToSearch,
-                DependencyArea = (DependencyArea)this.DependencyArea?.Clone()
+                DependencyArea = (DependencyArea)this.DependencyArea?.Clone(),
+                InterlineSpaces = this.InterlineSpaces
             };
         }
     }
