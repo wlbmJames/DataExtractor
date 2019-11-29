@@ -11,6 +11,8 @@ namespace ImageAnalyzer
     {
         static void Main(string[] args)
         {
+            //var dir = @"C:\ProgramData\EasyData\EasySeparate\Profiles\Tesseract\ImageAnalyzer";
+            //System.IO.Directory.SetCurrentDirectory(dir);
             if (args.Length != 2)
                  throw new Exception("");
             var pathToImage = args[0];

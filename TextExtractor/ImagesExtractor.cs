@@ -16,7 +16,9 @@ namespace TextExtractor
         private readonly List<string> AllowedFormats = new List<string>();
         private readonly List<string> AllowedMultiPageFormats = new List<string>();
         private const double SOURCE_DPI = 72.0;
-        private const string ENGINE_DATAPATH = "tessdata";
+        private const string ENGINE_DATAPATH = @"C:\ProgramData\EasyData\EasySeparate\Profiles\Tesseract\ImageAnalyzer\tessdata";
+        //private const string ENGINE_DATAPATH = "tessdata";
+
         internal ImagesExtractor()
         {
             RenderDPI = DEFAULT_RENDER_DPI;
