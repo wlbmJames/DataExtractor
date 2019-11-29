@@ -109,16 +109,20 @@ namespace DataAnalyzer
         {
             foreach (var dClass in _classes)
             {
+                var classFound = true;
                 foreach (var rule in dClass.HeaderRules)
                 {
                     rule.Check(page);
                     var sResult = rule.SearchResult;
                     if (!ResultSuccess(sResult) && rule.RuleBinding == RuleBinding.Required
                         || ResultSuccess(sResult) && rule.RuleBinding == RuleBinding.Prohibited)
-                        return null;
+                        classFound = false;
                 }
-                var result = (DocClass)dClass.Clone();
-                return result;
+                if (classFound)
+                {
+                    var result = (DocClass)dClass.Clone();
+                    return result;
+                }
             }
             return null;
         }
