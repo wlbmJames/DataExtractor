@@ -1,7 +1,7 @@
 ﻿using ATAPY.Document.Data.Core;
-using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace DataAnalyzer.Extensions
 {
@@ -13,7 +13,7 @@ namespace DataAnalyzer.Extensions
             List<Words> result = new List<Words>();
             foreach (var line in lines)
             {
-                List<Word> wordsInArea = line.Where(w=> w.Bound.IntersectsWith(Area)).ToList();
+                List<Word> wordsInArea = line.Where(w => w.Bound.IntersectsWith(Area)).ToList();
                 if (wordsInArea.Count < 1)
                     continue;
                 wordsInArea.Sort((x, y) => x.Bound.Left.CompareTo(y.Bound.Left));
@@ -22,7 +22,7 @@ namespace DataAnalyzer.Extensions
                 while (Match.Success)
                 {
                     string FoundString = Match.Value;
-                    var FoundWords = GetWordsMatchingString(wordsInArea,strLine,FoundString);
+                    var FoundWords = GetWordsMatchingString(wordsInArea, strLine, FoundString);
                     result.Add(FoundWords);
                     Match = Match.NextMatch();
                 }

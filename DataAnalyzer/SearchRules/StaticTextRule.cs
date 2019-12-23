@@ -1,7 +1,4 @@
-﻿using ATAPY.Document.Data.Core;
-using System.Linq;
-using System.Windows;
-using DataAnalyzer.Extensions;
+﻿using System.Windows;
 
 namespace DataAnalyzer.SearchRules
 {
@@ -11,7 +8,7 @@ namespace DataAnalyzer.SearchRules
         {
         }
 
-        public StaticTextRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title,"", ruleBinding, searchArea)
+        public StaticTextRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title, "", ruleBinding, searchArea)
         {
         }
 

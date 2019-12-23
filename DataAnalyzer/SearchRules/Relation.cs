@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAnalyzer.SearchRules.ConstraintsAdd;
+using System;
 
 namespace DataAnalyzer.SearchRules
 {
-    public class Relation: ICloneable
+    public class Relation : ICloneable
     {
         public Relation()
         {

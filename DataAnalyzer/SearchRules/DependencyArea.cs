@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace DataAnalyzer.SearchRules
 {
-    public class DependencyArea: ICloneable
+    public class DependencyArea : ICloneable
     {
         public DependencyArea()
         {

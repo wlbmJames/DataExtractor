@@ -74,12 +74,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultHandler.cs" />
     <Compile Include="ResultModel.cs" />
+    <Compile Include="RulesChecker.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\AreaProperties.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\AreaType.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\ConstraintType.cs" />
     <Compile Include="SearchRules\RepeatingCSRule.cs" />
     <Compile Include="SearchRules\DependencyArea.cs" />
     <Compile Include="SearchRules\Relation.cs" />
-    <Compile Include="SearchRules\RelationType.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\RelationType.cs" />
     <Compile Include="SearchRules\Rule.cs" />
     <Compile Include="SearchRules\RuleBinding.cs" />
+    <Compile Include="SearchRules\SearchConstraint.cs" />
     <Compile Include="SearchRules\SearchResult.cs" />
     <Compile Include="SearchRules\CharacterStringRule.cs" />
     <Compile Include="SearchRules\StaticTextRule.cs" />
@@ -93,5 +98,6 @@
       <Name>ATAPY.Document.Data.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

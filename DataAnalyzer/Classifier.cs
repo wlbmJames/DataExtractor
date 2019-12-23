@@ -1,9 +1,9 @@
 ﻿using ATAPY.Document.Data.Core;
 using DataAnalyzer.Core;
+using DataAnalyzer.SearchRules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataAnalyzer.SearchRules;
 
 namespace DataAnalyzer
 {
@@ -36,7 +36,7 @@ namespace DataAnalyzer
             foreach (var page in document.Pages)
             {
                 var currentPage = page.Index + 1;
-                if(_docStartedObject.DocStarted)
+                if (_docStartedObject.DocStarted)
                 {
                     if (CheckFooter(page))
                     {

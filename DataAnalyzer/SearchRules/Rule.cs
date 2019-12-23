@@ -1,5 +1,6 @@
 ﻿using ATAPY.Document.Data.Core;
 using DataAnalyzer.Extensions;
+using DataAnalyzer.SearchRules.ConstraintsAdd;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Windows;
 
 namespace DataAnalyzer.SearchRules
 {
-    public abstract class Rule: ICloneable
+    public abstract class Rule : ICloneable
     {
-        protected Rule(string title, string textToSearch, RuleBinding ruleBinding) : this(title,textToSearch, ruleBinding, new Rect())
+        protected Rule(string title, string textToSearch, RuleBinding ruleBinding) : this(title, textToSearch, ruleBinding, new Rect())
         {
         }
 
@@ -19,8 +20,10 @@ namespace DataAnalyzer.SearchRules
             TextToSearch = textToSearch;
             SearchArea = searchArea;
             this.RuleBinding = ruleBinding;
-        }
+            SearchConstraints = new List<SearchConstraint>();
 
+        }
+        public List<SearchConstraint> SearchConstraints;
         public string Title { get; private set; }
         public string TextToSearch { get; set; }
         public Rect SearchArea { get; set; }

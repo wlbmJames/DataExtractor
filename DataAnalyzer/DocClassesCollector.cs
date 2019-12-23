@@ -1,6 +1,6 @@
-﻿using System;
-using DataAnalyzer.Core;
+﻿using DataAnalyzer.Core;
 using DataAnalyzer.SearchRules;
+using DataAnalyzer.SearchRules.ConstraintsAdd;
 
 namespace DataAnalyzer
 {
@@ -291,12 +291,12 @@ namespace DataAnalyzer
             var stBupaArabia = new StaticTextRule("BupaArabia", RuleBinding.Required);
             stBupaArabia.TextToSearch = "Bupa Arabia for Cooperative Insurance";
             result.AddHeaderRule(stBupaArabia);
-            stBupaArabia.SearchArea = new System.Windows.Rect(0,0,2000,500);
+            stBupaArabia.SearchArea = new System.Windows.Rect(0, 0, 2000, 500);
 
             var stSignature = new StaticTextRule("SignatureNStamp", RuleBinding.Required);
             stSignature.TextToSearch = "Signature & Stamp";
             result.AddFooterRule(stSignature);
-            stSignature.SearchArea = new System.Windows.Rect(0,0,1500,3000);
+            stSignature.SearchArea = new System.Windows.Rect(0, 0, 1500, 3000);
 
             AddHeadData(result);
             AddTableData(result);
@@ -478,7 +478,7 @@ namespace DataAnalyzer
         #endregion Bupa
         public void xxx()
         {
- 
+
         }
     }
 }

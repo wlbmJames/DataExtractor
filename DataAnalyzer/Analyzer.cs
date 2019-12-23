@@ -1,6 +1,4 @@
 ﻿using System;
-using ATAPY.Document.Data.Core;
-using DataAnalyzer.Core;
 
 namespace DataAnalyzer
 {
@@ -10,7 +8,7 @@ namespace DataAnalyzer
         {
 
         }
-        
+
         public void AnalyzeDocument(ClassifiedDocument document)
         {
             if (document.DocClass == null || document.Document == null || document.Document.Pages.Count == 0)

@@ -1,11 +1,4 @@
-﻿using ATAPY.Document.Data.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using DataAnalyzer.Extensions;
+﻿using System.Windows;
 
 namespace DataAnalyzer.SearchRules
 {
@@ -15,7 +8,7 @@ namespace DataAnalyzer.SearchRules
         {
         }
 
-        public CharacterStringRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title,"", ruleBinding, searchArea)
+        public CharacterStringRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title, "", ruleBinding, searchArea)
         {
         }
 

@@ -4,12 +4,12 @@ using System.Windows;
 namespace DataAnalyzer.SearchRules
 {
     [Serializable]
-    public class SearchResult: ICloneable
+    public class SearchResult : ICloneable
     {
-        public SearchResult():this(-1)
+        public SearchResult() : this(-1)
         {
         }
-        public SearchResult(int PageNumber): this("", new Rect(), false)
+        public SearchResult(int PageNumber) : this("", new Rect(), false)
         {
 
         }
