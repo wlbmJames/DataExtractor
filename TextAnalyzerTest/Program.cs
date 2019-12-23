@@ -15,8 +15,11 @@ namespace TextAnalyzerTest
             //var dir = @"D:\Projects\TessWrapper\tesseract";
             //System.IO.Directory.SetCurrentDirectory(dir);
             //var imageName = @"D:\Projects\TextLayerAnalyzer\Samples\Bupa\{imageName}.tif";
-            var imageName = "111";
+            var imageName = "2019-11-28_11-25-08_CE 2017-18 - 2_4";
             var document = GetDoc(imageName);
+            double avgSize = 0;
+            document.Pages[0].Words.ForEach(line => avgSize += line.Bound.Height);
+            avgSize /= document.Pages[0].Words.Count;
             var dClassifier = new Classifier();
             dClassifier.AddClass(DocClassesCollector.Tawunia());
             dClassifier.AddClass(DocClassesCollector.Bupa());
