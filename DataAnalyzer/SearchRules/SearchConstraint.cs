@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace DataAnalyzer.SearchRules
 {
-    public class SearchConstraint
+    public class SearchConstraint: ICloneable
     {
         private ConstraintType _constraintType;
         private AreaType _areaType;
@@ -116,6 +116,11 @@ namespace DataAnalyzer.SearchRules
         {
             OffsetCalc = offsetCalc;
             return this;
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
         #endregion Init
         internal ConstraintType ConstraintType { get => _constraintType; private set => _constraintType = value; }

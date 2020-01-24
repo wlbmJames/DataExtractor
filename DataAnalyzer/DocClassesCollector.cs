@@ -6,8 +6,9 @@ namespace DataAnalyzer
 {
     public class DocClassesCollector
     {
+        #region Legacy
         #region Tawunia
-        public static DocClass Tawunia()
+        public static DocClass TawuniaLegacy()
         {
             var result = new DocClass("Tawunia", 2);
 
@@ -41,12 +42,12 @@ namespace DataAnalyzer
             PolicyRule.TextToSearch = "Policy Holder Confirmation";
             PolicyRule.SearchArea = new System.Windows.Rect(0, 0, 1000, 2000);
 
-            AddDataRules(result);
-            SecondPageFields(result);
+            TawuniaLegacyAddDataRules(result);
+            TawuniaLegacySecondPageFields(result);
             return result;
         }
 
-        private static void AddDataRules(DocClass result)
+        private static void TawuniaLegacyAddDataRules(DocClass result)
         {
             var crNumInit = new StaticTextRule("CrNum", RuleBinding.Optional);
             result.AddDataRule(crNumInit);
@@ -206,7 +207,7 @@ namespace DataAnalyzer
             rgPeriodNumOfLives.DependencyArea = dargPeriodNumOfLives;
         }
 
-        private static void SecondPageFields(DocClass result)
+        private static void TawuniaLegacySecondPageFields(DocClass result)
         {
             var OutPatient = new StaticTextRule("Outpatient", RuleBinding.Required);
             result.AddDataRule(OutPatient);
@@ -283,8 +284,8 @@ namespace DataAnalyzer
             inpatientAmt.SearchArea = new System.Windows.Rect(0, 0, 1, 1);
         }
         #endregion Tawunia
-        #region Bupa
-        public static DocClass Bupa()
+        #region BupaLegacy
+        public static DocClass BupaLegacy()
         {
             var result = new DocClass("Bupa", 4);
 
@@ -298,13 +299,12 @@ namespace DataAnalyzer
             result.AddFooterRule(stSignature);
             stSignature.SearchArea = new System.Windows.Rect(0, 0, 1500, 3000);
 
-            AddHeadData(result);
-            AddTableData(result);
+            BupaLegacyAddHeadData(result);
+            BupaLegacyAddTableData(result);
 
             return result;
         }
-
-        private static void AddHeadData(DocClass result)
+        private static void BupaLegacyAddHeadData(DocClass result)
         {
             var stInceptionDate = new StaticTextRule("stInceptionDate", RuleBinding.Required);
             stInceptionDate.TextToSearch = "Inception Date";
@@ -347,16 +347,16 @@ namespace DataAnalyzer
             csExpiryDate.DependencyArea = dacsExpiryDate;
         }
 
-        private static void AddTableData(DocClass result)
+        private static void BupaLegacyAddTableData(DocClass result)
         {
-            Get2YearPrior(result);
+            BupaLegacyGet2YearPrior(result);
 
-            GetYearPrior(result);
+            BupaLegacyGetYearPrior(result);
 
-            GetLastYear(result);
+            BupaLegacyGetLastYear(result);
         }
 
-        private static void GetLastYear(DocClass result)
+        private static void BupaLegacyGetLastYear(DocClass result)
         {
             var stLastYear = new StaticTextRule("LastYear", RuleBinding.Required);
             stLastYear.TextToSearch = "Policy Year";
@@ -396,7 +396,7 @@ namespace DataAnalyzer
             rgcsNumberOfLives.DependencyArea = dargNumberOfLives;
         }
 
-        private static void GetYearPrior(DocClass result)
+        private static void BupaLegacyGetYearPrior(DocClass result)
         {
             var stYearPrior = new StaticTextRule("YearPrior", RuleBinding.Required);
             stYearPrior.TextToSearch = "Policy Year";
@@ -436,7 +436,7 @@ namespace DataAnalyzer
             rgcsNumberOfLives.DependencyArea = dargNumberOfLives;
         }
 
-        private static void Get2YearPrior(DocClass result)
+        private static void BupaLegacyGet2YearPrior(DocClass result)
         {
             var st2YPrior = new StaticTextRule("2YearsPrior", RuleBinding.Required);
             st2YPrior.TextToSearch = "Policy Year";
@@ -475,7 +475,17 @@ namespace DataAnalyzer
             dargNumberOfLives.Above.Offset = 70;
             rgcsNumberOfLives.DependencyArea = dargNumberOfLives;
         }
-        #endregion Bupa
+        #endregion BupaLegacy
+        #endregion Legacy
+
+        public static DocClass Bupa()
+        {
+            var result = new DocClass("BupaTest", 4);
+            var stBupaArab = new StaticTextRule("BupaArab", RuleBinding.Required);
+            var firstConstr = new SearchConstraint().Page().Above.XCenter;
+            stBupaArab.SearchConstraints.Add(firstConstr);
+            return result;
+        }
         public void xxx()
         {
 

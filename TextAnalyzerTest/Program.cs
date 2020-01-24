@@ -15,11 +15,11 @@ namespace TextAnalyzerTest
             //var dir = @"D:\Projects\TessWrapper\tesseract";
             //System.IO.Directory.SetCurrentDirectory(dir);
             //var imageName = @"D:\Projects\TextLayerAnalyzer\Samples\Bupa\{imageName}.tif";
-            var imageName = "111";
+            var imageName = "2019-11-28_11-25-24_CE 2019-20 - 2_9";
             var document = GetDoc(imageName);
             var dClassifier = new Classifier();
-            dClassifier.AddClass(DocClassesCollector.Tawunia());
-            dClassifier.AddClass(DocClassesCollector.Bupa());
+            dClassifier.AddClass(DocClassesCollector.TawuniaLegacy());
+            dClassifier.AddClass(DocClassesCollector.BupaLegacy());
             var docs = dClassifier.Classify(document);
             var analyzer = new Analyzer();
             var models = new List<ResultModel>();

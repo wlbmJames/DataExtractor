@@ -63,7 +63,6 @@ namespace DataAnalyzer.SearchRules
         public abstract object Clone();
         public Rule DependencyRule { get; set; } = null;
         public DependencyArea DependencyArea { get; set; } = null;
-
         protected int CheckDependency(Relation relation)
         {
             var area = DependencyRule.SearchResult.Area;

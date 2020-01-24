@@ -47,6 +47,7 @@ namespace DataAnalyzer
                         continue;
                         break;
                 }
+
             }
             return resultRect;
         }
@@ -60,46 +61,63 @@ namespace DataAnalyzer
 
         private Rect RestrictArea(Rect rectToCheck, SearchConstraint constraint)
         {
-            //switch (constraint.ConstraintType)
-            //{
-            //    case SearchRules.ConstraintsAdd.ConstraintType.RightOf:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.ConstraintType.LeftOf:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.ConstraintType.Below:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.ConstraintType.Above:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.ConstraintType.None:
-            //        break;
-            //    default:
-            //        break;
-            //}
-            //switch (constraint.RelationType)
-            //{
-            //    case SearchRules.ConstraintsAdd.RelationType.Left:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.RelationType.Top:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.RelationType.Right:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.RelationType.Bot:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.RelationType.XCenter:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.RelationType.YCenter:
-            //        break;
-            //    case SearchRules.ConstraintsAdd.RelationType.None:
-            //        break;
-            //    default:
-            //        break;
-            //}
-            throw new NotImplementedException();
+
+            double dependencyCoord = 0;
+            switch (constraint.RelationType)
+            {
+                case SearchRules.ConstraintsAdd.RelationType.Left:
+                    dependencyCoord = rectToCheck.Left;
+                    break;
+                case SearchRules.ConstraintsAdd.RelationType.Top:
+                    dependencyCoord = rectToCheck.Top;
+                    break;
+                case SearchRules.ConstraintsAdd.RelationType.Right:
+                    dependencyCoord = rectToCheck.Right;
+                    break;
+                case SearchRules.ConstraintsAdd.RelationType.Bot:
+                    dependencyCoord = rectToCheck.Bottom;
+                    break;
+                case SearchRules.ConstraintsAdd.RelationType.XCenter:
+                    dependencyCoord = rectToCheck.X + rectToCheck.Width / 2;
+                    break;
+                case SearchRules.ConstraintsAdd.RelationType.YCenter:
+                    dependencyCoord = rectToCheck.Y + rectToCheck.Height / 2;
+                    break;
+                case SearchRules.ConstraintsAdd.RelationType.None:
+                    dependencyCoord = -1;
+                    break;
+                default:
+                    dependencyCoord = -1;
+                    break;
+            }
+            if (dependencyCoord < 0)
+                return rectToCheck;
+            var result = _currentPage.Bound;
+            switch (constraint.ConstraintType)
+            {
+                case SearchRules.ConstraintsAdd.ConstraintType.RightOf:
+                    result.X = dependencyCoord;
+                    break;
+                case SearchRules.ConstraintsAdd.ConstraintType.LeftOf:
+                    result.Width = dependencyCoord;
+                    break;
+                case SearchRules.ConstraintsAdd.ConstraintType.Below:
+                    result.Y = dependencyCoord;
+                    break;
+                case SearchRules.ConstraintsAdd.ConstraintType.Above:
+                    result.Height = dependencyCoord;
+                    break;
+                case SearchRules.ConstraintsAdd.ConstraintType.None:
+                    break;
+                default:
+                    break;
+            }
+            return result;
         }
 
         private Rect CheckRuleConstraint(SearchConstraint constraint, Rect currentRect)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             var ruleName = constraint.RuleTitle;
             var rule = _rulesToCheck.FirstOrDefault(r => r.Title == ruleName);
             if (rule == null)
@@ -110,8 +128,10 @@ namespace DataAnalyzer
             if (rule.SearchResult.IsFound)
             {
                 rectToCheck = rule.SearchResult.Area;
-
+                var strctedRect = RestrictArea(rectToCheck, constraint);
+                currentRect = Rect.Intersect(currentRect, strctedRect);
             }
+            return currentRect;
         }
     }
 }

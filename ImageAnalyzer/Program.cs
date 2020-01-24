@@ -19,8 +19,8 @@ namespace ImageAnalyzer
             var pathToResultXml = args[1];
             var document = GetDoc(pathToImage);
             var dClassifier = new Classifier();
-            dClassifier.AddClass(DocClassesCollector.Tawunia());
-            dClassifier.AddClass(DocClassesCollector.Bupa());
+            dClassifier.AddClass(DocClassesCollector.TawuniaLegacy());
+            dClassifier.AddClass(DocClassesCollector.BupaLegacy());
             var docs = dClassifier.Classify(document);
             var analyzer = new Analyzer();
             var models = new List<ResultModel>();

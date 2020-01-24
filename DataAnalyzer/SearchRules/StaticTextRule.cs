@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Linq;
 
 namespace DataAnalyzer.SearchRules
 {
@@ -18,7 +19,8 @@ namespace DataAnalyzer.SearchRules
             {
                 SearchResult = (SearchResult)this.SearchResult?.Clone(),
                 TextToSearch = this.TextToSearch,
-                DependencyArea = (DependencyArea)this.DependencyArea?.Clone()
+                DependencyArea = (DependencyArea)this.DependencyArea?.Clone(),
+                SearchConstraints = this.SearchConstraints.Select(t => t.Clone() as SearchConstraint).ToList()
             };
         }
 
