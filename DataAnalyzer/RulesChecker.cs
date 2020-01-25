@@ -22,7 +22,7 @@ namespace DataAnalyzer
         {
             foreach (var rule in _rulesToCheck)
             {
-                //rule.Check(_currentPage);
+                rule.Check(_currentPage);
             }
             throw new NotImplementedException();
         }
