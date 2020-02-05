@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAnalyzer.SearchRules.ConstraintsAdd
 {
-    enum AreaProperties
+    public enum AreaProperties
     {
         Height,
         Width,
-
     }
 }

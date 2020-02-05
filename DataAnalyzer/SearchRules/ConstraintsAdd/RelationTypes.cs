@@ -1,8 +1,8 @@
 ﻿namespace DataAnalyzer.SearchRules.ConstraintsAdd
 {
-    public enum RelationType
+    public enum RelationTypes : int
     {
-        Left,
+        Left = 0,
         Top,
         Right,
         Bot,

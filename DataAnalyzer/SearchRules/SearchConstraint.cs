@@ -1,5 +1,4 @@
-﻿
-using DataAnalyzer.SearchRules.ConstraintsAdd;
+﻿using DataAnalyzer.SearchRules.ConstraintsAdd;
 using System;
 using System.Windows;
 
@@ -7,110 +6,91 @@ namespace DataAnalyzer.SearchRules
 {
     public class SearchConstraint: ICloneable
     {
-        private ConstraintType _constraintType;
-        private AreaType _areaType;
-        private string _ruleTitle;
-        private RelationType _relationType;
-        private Func<Rect, double> _offsetCalc;
+        internal ConstraintTypes ConstraintType { get; set; }
+        internal AreaTypes AreaType { get; set; }
+        public string RuleTitle { get; set; }
+        public RelationTypes RelationType { get; set; }
+        public Func<Rect, double> OffsetCalc { get; set; }
+
         public SearchConstraint()
         {
-            ConstraintType = ConstraintType.None;
-            AreaType = AreaType.None;
-            RuleTitle = string.Empty;
-            RelationType = RelationType.None;
+            this.ConstraintType = ConstraintTypes.None;
+            this.AreaType = AreaTypes.None;
+            this.RuleTitle = string.Empty;
+            this.RelationType = RelationTypes.None;
         }
         #region Init
-        public SearchConstraint RightOf
+        public SearchConstraint RightOf()
         {
-            get
-            {
-                ConstraintType = ConstraintType.RightOf;
-                return this;
-            }
+            this.ConstraintType = ConstraintTypes.RightOf;
+            return this;
         }
-        public SearchConstraint LeftOf
-        {
-            get
-            {
-                ConstraintType = ConstraintType.LeftOf;
-                return this;
-            }
-        }
-        public SearchConstraint Below
-        {
-            get
-            {
-                ConstraintType = ConstraintType.Below;
-                return this;
-            }
-        }
-        public SearchConstraint Above
-        {
-            get
-            {
-                ConstraintType = ConstraintType.Above;
-                return this;
-            }
 
+        public SearchConstraint LeftOf()
+        {
+            this.ConstraintType = ConstraintTypes.LeftOf;
+            return this;
         }
+
+        public SearchConstraint Below()
+        {
+            this.ConstraintType = ConstraintTypes.Below;
+            return this;
+        }
+
+        public SearchConstraint Above()
+        {
+            this.ConstraintType = ConstraintTypes.Above;
+            return this;
+        }
+
         public SearchConstraint Page()
         {
-            AreaType = AreaType.Page;
+            this.AreaType = AreaTypes.Page;
             return this;
         }
+
         public SearchConstraint Rule(string ruleTitle)
         {
-            AreaType = AreaType.Rule;
-            RuleTitle = ruleTitle;
+            this.AreaType = AreaTypes.Rule;
+            this.RuleTitle = ruleTitle;
             return this;
         }
-        public SearchConstraint Bot
+
+        public SearchConstraint Bot()
         {
-            get
-            {
-                RelationType = RelationType.Bot;
-                return this;
-            }
+            this.RelationType = RelationTypes.Bot;
+            return this;
         }
-        public SearchConstraint Top
+
+        public SearchConstraint Top()
         {
-            get
-            {
-                RelationType = RelationType.Top;
-                return this;
-            }
+            this.RelationType = RelationTypes.Top;
+            return this;
         }
-        public SearchConstraint Right
+
+        public SearchConstraint Right()
         {
-            get
-            {
-                RelationType = RelationType.Right;
-                return this;
-            }
+            this.RelationType = RelationTypes.Right;
+            return this;
         }
-        public SearchConstraint Left
+
+        public SearchConstraint Left()
         {
-            get
-            {
-                RelationType = RelationType.Left;
-                return this;
-            }
+            this.RelationType = RelationTypes.Left;
+            return this;
         }
-        public SearchConstraint XCenter
+
+        public SearchConstraint XCenter()
         {
-            get
-            {
-                RelationType = RelationType.XCenter;
-                return this;
-            }
+            this.RelationType = RelationTypes.XCenter;
+            return this;
         }
-        public SearchConstraint YCenter
+
+        public SearchConstraint YCenter()
         {
-            get
-            {
-                RelationType = RelationType.YCenter;
-                return this;
-            }
+            this.RelationType = RelationTypes.YCenter;
+            return this;
         }
         public SearchConstraint Offset(Func<Rect, double> offsetCalc)
         {
@@ -123,10 +103,5 @@ namespace DataAnalyzer.SearchRules
             return MemberwiseClone();
         }
         #endregion Init
-        internal ConstraintType ConstraintType { get => _constraintType; private set => _constraintType = value; }
-        internal AreaType AreaType { get => _areaType; private set => _areaType = value; }
-        public string RuleTitle { get => _ruleTitle; private set => _ruleTitle = value; }
-        public RelationType RelationType { get => _relationType; private set => _relationType = value; }
-        public Func<Rect, double> OffsetCalc { get => _offsetCalc; private set => _offsetCalc = value; }
     }
 }

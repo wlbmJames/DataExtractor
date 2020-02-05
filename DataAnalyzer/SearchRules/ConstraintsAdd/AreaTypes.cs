@@ -1,8 +1,8 @@
 ﻿namespace DataAnalyzer.SearchRules.ConstraintsAdd
 {
-    enum AreaType
+    public enum AreaTypes
     {
-        Page,
+        Page = 0,
         Rule,
         None
     }

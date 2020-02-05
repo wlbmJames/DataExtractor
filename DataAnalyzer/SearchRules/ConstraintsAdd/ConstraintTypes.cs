@@ -1,8 +1,8 @@
 ﻿namespace DataAnalyzer.SearchRules.ConstraintsAdd
 {
-    enum ConstraintType
+    public enum ConstraintTypes
     {
-        RightOf,
+        RightOf = 0,
         LeftOf,
         Below,
         Above,

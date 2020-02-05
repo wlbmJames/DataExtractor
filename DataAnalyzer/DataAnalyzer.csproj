@@ -76,12 +76,12 @@
     <Compile Include="ResultModel.cs" />
     <Compile Include="RulesChecker.cs" />
     <Compile Include="SearchRules\ConstraintsAdd\AreaProperties.cs" />
-    <Compile Include="SearchRules\ConstraintsAdd\AreaType.cs" />
-    <Compile Include="SearchRules\ConstraintsAdd\ConstraintType.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\AreaTypes.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\ConstraintTypes.cs" />
     <Compile Include="SearchRules\RepeatingCSRule.cs" />
     <Compile Include="SearchRules\DependencyArea.cs" />
     <Compile Include="SearchRules\Relation.cs" />
-    <Compile Include="SearchRules\ConstraintsAdd\RelationType.cs" />
+    <Compile Include="SearchRules\ConstraintsAdd\RelationTypes.cs" />
     <Compile Include="SearchRules\Rule.cs" />
     <Compile Include="SearchRules\RuleBinding.cs" />
     <Compile Include="SearchRules\SearchConstraint.cs" />

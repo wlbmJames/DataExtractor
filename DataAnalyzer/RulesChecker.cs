@@ -16,18 +16,22 @@ namespace DataAnalyzer
         {
             _rulesToCheck = rulesToCheck;
             _currentPage = currentPage;
+        }       
+        public RulesChecker(Page currentPage)
+        {
+            _currentPage = currentPage;
         }
 
         public bool Check()
         {
             foreach (var rule in _rulesToCheck)
             {
-                rule.Check(_currentPage);
+                var area = GetSearchArea(rule);
             }
             throw new NotImplementedException();
         }
 
-        private Rect GetSearchArea(Rule rule)
+        public Rect GetSearchArea(Rule rule)
         {
             var constraints = rule.SearchConstraints;
             var resultRect = _currentPage.Bound;
@@ -35,13 +39,13 @@ namespace DataAnalyzer
             {
                 switch (constraint.AreaType)
                 {
-                    case SearchRules.ConstraintsAdd.AreaType.Page:
+                    case SearchRules.ConstraintsAdd.AreaTypes.Page:
                         resultRect = CheckPageConstraint(constraint, resultRect);
                         break;
-                    case SearchRules.ConstraintsAdd.AreaType.Rule:
+                    case SearchRules.ConstraintsAdd.AreaTypes.Rule:
                         resultRect = CheckRuleConstraint(constraint, resultRect);
                         break;
-                    case SearchRules.ConstraintsAdd.AreaType.None:
+                    case SearchRules.ConstraintsAdd.AreaTypes.None:
                         break;
                     default:
                         continue;
@@ -65,25 +69,25 @@ namespace DataAnalyzer
             double dependencyCoord = 0;
             switch (constraint.RelationType)
             {
-                case SearchRules.ConstraintsAdd.RelationType.Left:
+                case SearchRules.ConstraintsAdd.RelationTypes.Left:
                     dependencyCoord = rectToCheck.Left;
                     break;
-                case SearchRules.ConstraintsAdd.RelationType.Top:
+                case SearchRules.ConstraintsAdd.RelationTypes.Top:
                     dependencyCoord = rectToCheck.Top;
                     break;
-                case SearchRules.ConstraintsAdd.RelationType.Right:
+                case SearchRules.ConstraintsAdd.RelationTypes.Right:
                     dependencyCoord = rectToCheck.Right;
                     break;
-                case SearchRules.ConstraintsAdd.RelationType.Bot:
+                case SearchRules.ConstraintsAdd.RelationTypes.Bot:
                     dependencyCoord = rectToCheck.Bottom;
                     break;
-                case SearchRules.ConstraintsAdd.RelationType.XCenter:
+                case SearchRules.ConstraintsAdd.RelationTypes.XCenter:
                     dependencyCoord = rectToCheck.X + rectToCheck.Width / 2;
                     break;
-                case SearchRules.ConstraintsAdd.RelationType.YCenter:
+                case SearchRules.ConstraintsAdd.RelationTypes.YCenter:
                     dependencyCoord = rectToCheck.Y + rectToCheck.Height / 2;
                     break;
-                case SearchRules.ConstraintsAdd.RelationType.None:
+                case SearchRules.ConstraintsAdd.RelationTypes.None:
                     dependencyCoord = -1;
                     break;
                 default:
@@ -95,19 +99,19 @@ namespace DataAnalyzer
             var result = _currentPage.Bound;
             switch (constraint.ConstraintType)
             {
-                case SearchRules.ConstraintsAdd.ConstraintType.RightOf:
+                case SearchRules.ConstraintsAdd.ConstraintTypes.RightOf:
                     result.X = dependencyCoord;
                     break;
-                case SearchRules.ConstraintsAdd.ConstraintType.LeftOf:
+                case SearchRules.ConstraintsAdd.ConstraintTypes.LeftOf:
                     result.Width = dependencyCoord;
                     break;
-                case SearchRules.ConstraintsAdd.ConstraintType.Below:
+                case SearchRules.ConstraintsAdd.ConstraintTypes.Below:
                     result.Y = dependencyCoord;
                     break;
-                case SearchRules.ConstraintsAdd.ConstraintType.Above:
+                case SearchRules.ConstraintsAdd.ConstraintTypes.Above:
                     result.Height = dependencyCoord;
                     break;
-                case SearchRules.ConstraintsAdd.ConstraintType.None:
+                case SearchRules.ConstraintsAdd.ConstraintTypes.None:
                     break;
                 default:
                     break;

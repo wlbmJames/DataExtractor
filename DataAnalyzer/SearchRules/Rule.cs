@@ -32,27 +32,30 @@ namespace DataAnalyzer.SearchRules
         public SearchResult SearchResult { get; protected set; }
         public virtual void Check(Page page, int pageNumber = -1)
         {
-            Rect rect;
-            if (DependencyRule == null || !DependencyRule.SearchResult.IsFound)
-            {
-                rect = SearchArea;
-            }
-            else
-            {
-                if (DependencyRule.SearchResult.PageNumber != pageNumber)
-                    return;
-                var left = 0;
-                var top = 0;
-                var right = 0;
-                var bot = 0;
-                left = CheckDependency(DependencyArea.RightOf);
-                top = CheckDependency(DependencyArea.Below);
-                right = CheckDependency(DependencyArea.LeftOf);
-                bot = CheckDependency(DependencyArea.Above);
-                var leftT = new Point(left, top);
-                var rightB = new Point(right, bot);
-                rect = new Rect(leftT, rightB);
-            }
+            var rBuilder = new RulesChecker(page);
+            Rect rect = rBuilder.GetSearchArea(this);
+            #region Legacy
+            //if (DependencyRule == null || !DependencyRule.SearchResult.IsFound)
+            //{
+            //    rect = SearchArea;
+            //}
+            //else
+            //{
+            //    if (DependencyRule.SearchResult.PageNumber != pageNumber)
+            //        return;
+            //    var left = 0;
+            //    var top = 0;
+            //    var right = 0;
+            //    var bot = 0;
+            //    left = CheckDependency(DependencyArea.RightOf);
+            //    top = CheckDependency(DependencyArea.Below);
+            //    right = CheckDependency(DependencyArea.LeftOf);
+            //    bot = CheckDependency(DependencyArea.Above);
+            //    var leftT = new Point(left, top);
+            //    var rightB = new Point(right, bot);
+            //    rect = new Rect(leftT, rightB);
+            //}
+            #endregion Legacy
             var result = page.FindWords(rect, this.TextToSearch);
             if (result.Count < 1)
                 SearchResult = new SearchResult(pageNumber);
@@ -69,19 +72,19 @@ namespace DataAnalyzer.SearchRules
             var startval = 0.0d;
             switch (relation.Type)
             {
-                case RelationType.Left:
+                case RelationTypes.Left:
                     startval = area.Left;
                     break;
-                case RelationType.Top:
+                case RelationTypes.Top:
                     startval = area.Top;
                     break;
-                case RelationType.Right:
+                case RelationTypes.Right:
                     startval = area.Right;
                     break;
-                case RelationType.Bot:
+                case RelationTypes.Bot:
                     startval = area.Bottom;
                     break;
-                case RelationType.None:
+                case RelationTypes.None:
                     break;
                 default:
                     break;

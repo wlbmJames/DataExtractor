@@ -7,10 +7,10 @@ namespace DataAnalyzer.SearchRules
     {
         public Relation()
         {
-            Type = RelationType.None;
+            Type = RelationTypes.None;
             Offset = 1;
         }
-        public RelationType Type { get; set; }
+        public RelationTypes Type { get; set; }
         public int Offset { get; set; }
 
         public object Clone()
