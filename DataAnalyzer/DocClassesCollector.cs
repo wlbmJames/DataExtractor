@@ -477,7 +477,7 @@ namespace DataAnalyzer
         }
         #endregion BupaLegacy
         #endregion Legacy
-
+        #region Bupa
         public static DocClass Bupa()
         {
             var result = new DocClass("BupaTest", 4);
@@ -489,6 +489,40 @@ namespace DataAnalyzer
             result.AddHeaderRule(stBupaArab);
             return result;
         }
+        #endregion Bupa
+        #region Act
+        public static DocClass Act()
+        {
+            var result = new DocClass("Act", 1);
+            var stAct = new StaticTextRule("ActHead", RuleBinding.Required);
+            stAct.TextToSearch = "Акт";
+            var actBot = new SearchConstraint().Page().Above().YCenter();
+            var actRight = new SearchConstraint().Page().LeftOf().XCenter();
+            stAct.SearchConstraints.Add(actBot);
+            stAct.SearchConstraints.Add(actRight);
+            result.AddHeaderRule(stAct);
+            return result;
+        }
+
+        public static void Add(DocClass docClass)
+        {
+            var stAct = new StaticTextRule("Act", RuleBinding.Required);
+            stAct.TextToSearch = "Акт";
+            var actBot = new SearchConstraint().Page().Above().YCenter();
+            var actRight = new SearchConstraint().Page().LeftOf().XCenter();
+            stAct.SearchConstraints.Add(actBot);
+            stAct.SearchConstraints.Add(actRight);
+            docClass.AddDataRule(stAct);
+
+            var stOt = new StaticTextRule("ot", RuleBinding.Required);
+            stAct.TextToSearch = "от";
+            var otBot = new SearchConstraint().Above().Rule("ot").Bot();
+            var otRight = new SearchConstraint().Below().Rule("ot").Top();
+            stAct.SearchConstraints.Add(otBot);
+            stAct.SearchConstraints.Add(otRight);
+            docClass.AddDataRule(stOt);
+        }
+        #endregion Act
         public void xxx()
         {
 
