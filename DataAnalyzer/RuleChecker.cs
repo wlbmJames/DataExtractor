@@ -7,33 +7,33 @@ using System.Windows;
 
 namespace DataAnalyzer
 {
-    public class RulesChecker
+    public class RuleChecker
     {
-        private List<Rule> _rulesToCheck;
+        private Rule _ruleToCheck;
         private Page _currentPage;
 
-        public RulesChecker(List<Rule> rulesToCheck, Page currentPage)
+        public RuleChecker(Rule ruleToCheck, Page currentPage)
         {
-            _rulesToCheck = rulesToCheck;
+            _ruleToCheck = ruleToCheck;
             _currentPage = currentPage;
         }       
-        public RulesChecker(Page currentPage)
-        {
-            _currentPage = currentPage;
-        }
+        //public RuleChecker(Page currentPage)
+        //{
+        //    _currentPage = currentPage;
+        //}
 
         public bool Check()
         {
-            foreach (var rule in _rulesToCheck)
-            {
-                var area = GetSearchArea(rule);
-            }
+            //foreach (var rule in _ruleToCheck)
+            //{
+            //    var area = GetSearchArea(rule);
+            //}
             throw new NotImplementedException();
         }
 
-        public Rect GetSearchArea(Rule rule)
+        public Rect GetSearchArea()
         {
-            var constraints = rule.SearchConstraints;
+            var constraints = _ruleToCheck.SearchConstraints;
             var resultRect = _currentPage.Bound;
             foreach (var constraint in constraints)
             {
@@ -87,13 +87,17 @@ namespace DataAnalyzer
                 case SearchRules.ConstraintsAdd.RelationTypes.YCenter:
                     dependencyCoord = rectToCheck.Y + rectToCheck.Height / 2;
                     break;
-                case SearchRules.ConstraintsAdd.RelationTypes.None:
-                    dependencyCoord = -1;
-                    break;
-                default:
-                    dependencyCoord = -1;
-                    break;
+                //case SearchRules.ConstraintsAdd.RelationTypes.None:
+                //    dependencyCoord = -1;
+                //    break;
+                //default:
+                //    dependencyCoord = -1;
+                //    break;
             }
+            if (constraint.XOffset != 0.0)
+                dependencyCoord += rectToCheck.Height * constraint.XOffset;
+            if (constraint.YOffset != 0.0)
+                dependencyCoord += rectToCheck.Width * constraint.YOffset;
             if (dependencyCoord < 0)
                 return rectToCheck;
             var result = _currentPage.Bound;
@@ -123,7 +127,7 @@ namespace DataAnalyzer
         {
             //throw new NotImplementedException();
             var ruleName = constraint.RuleTitle;
-            var rule = _rulesToCheck.FirstOrDefault(r => r.Title == ruleName);
+            var rule = _ruleToCheck.Parent.FirstOrDefault(r => r.Title == ruleName);
             if (rule == null)
                 throw new Exception($"Can not find rule {ruleName}");
             if (rule.SearchResult == null)

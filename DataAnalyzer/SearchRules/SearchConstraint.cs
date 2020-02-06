@@ -6,11 +6,12 @@ namespace DataAnalyzer.SearchRules
 {
     public class SearchConstraint: ICloneable
     {
-        internal ConstraintTypes ConstraintType { get; set; }
-        internal AreaTypes AreaType { get; set; }
-        public string RuleTitle { get; set; }
-        public RelationTypes RelationType { get; set; }
-        public Func<Rect, double> OffsetCalc { get; set; }
+        internal ConstraintTypes ConstraintType { get; private set; }
+        internal AreaTypes AreaType { get; private set; }
+        public string RuleTitle { get; private set; }
+        public RelationTypes RelationType { get; private set; }
+        public double XOffset { get; private set; }
+        public double YOffset { get; private set; }
 
         public SearchConstraint()
         {
@@ -18,6 +19,8 @@ namespace DataAnalyzer.SearchRules
             this.AreaType = AreaTypes.None;
             this.RuleTitle = string.Empty;
             this.RelationType = RelationTypes.None;
+            XOffset = 0.0;
+            YOffset = 0.0;
         }
         #region Init
         public SearchConstraint RightOf()
@@ -92,11 +95,21 @@ namespace DataAnalyzer.SearchRules
             this.RelationType = RelationTypes.YCenter;
             return this;
         }
-        public SearchConstraint Offset(Func<Rect, double> offsetCalc)
+        public SearchConstraint GetX(double offset)
         {
-            OffsetCalc = offsetCalc;
+            XOffset = offset;
             return this;
-        }
+        }        
+        public SearchConstraint GetY(double offset)
+        {
+            YOffset = offset;
+            return this;
+        }        
+        //public SearchConstraint Offset(int offset)
+        //{
+        //    OffInt = offset;
+        //    return this;
+        //}
 
         public object Clone()
         {

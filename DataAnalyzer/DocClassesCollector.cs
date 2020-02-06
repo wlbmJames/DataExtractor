@@ -496,30 +496,35 @@ namespace DataAnalyzer
             var result = new DocClass("Act", 1);
             var stAct = new StaticTextRule("ActHead", RuleBinding.Required);
             stAct.TextToSearch = "Акт";
-            var actBot = new SearchConstraint().Page().Above().YCenter();
-            var actRight = new SearchConstraint().Page().LeftOf().XCenter();
+            var actBot = new SearchConstraint().Page().Above().GetX(0.3);
+            var actRight = new SearchConstraint().Page().LeftOf().GetY(0.2); ;
             stAct.SearchConstraints.Add(actBot);
             stAct.SearchConstraints.Add(actRight);
             result.AddHeaderRule(stAct);
+            ActAddData(result);
             return result;
         }
 
-        public static void Add(DocClass docClass)
+        public static void ActAddData(DocClass docClass)
         {
             var stAct = new StaticTextRule("Act", RuleBinding.Required);
             stAct.TextToSearch = "Акт";
-            var actBot = new SearchConstraint().Page().Above().YCenter();
-            var actRight = new SearchConstraint().Page().LeftOf().XCenter();
+            var actBot = new SearchConstraint().Page().Above().GetX(0.3);
+            var actRight = new SearchConstraint().Page().LeftOf().GetY(0.2);
             stAct.SearchConstraints.Add(actBot);
             stAct.SearchConstraints.Add(actRight);
             docClass.AddDataRule(stAct);
 
             var stOt = new StaticTextRule("ot", RuleBinding.Required);
-            stAct.TextToSearch = "от";
-            var otBot = new SearchConstraint().Above().Rule("ot").Bot();
-            var otRight = new SearchConstraint().Below().Rule("ot").Top();
-            stAct.SearchConstraints.Add(otBot);
-            stAct.SearchConstraints.Add(otRight);
+            stOt.TextToSearch = "от";
+            var otBot = new SearchConstraint().Above().Rule("Act").Bot().GetX(1);
+            var otTop = new SearchConstraint().Below().Rule("Act").Top().GetX(-1);
+            var otLeft = new SearchConstraint().RightOf().Rule("Act").Right().GetY(1);
+            var otRight = new SearchConstraint().LeftOf().Rule("Act").Right().GetY(3);
+            stOt.SearchConstraints.Add(otBot);
+            stOt.SearchConstraints.Add(otRight);
+            stOt.SearchConstraints.Add(otTop);
+            stOt.SearchConstraints.Add(otLeft);
             docClass.AddDataRule(stOt);
         }
         #endregion Act

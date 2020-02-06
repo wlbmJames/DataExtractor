@@ -74,7 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultHandler.cs" />
     <Compile Include="ResultModel.cs" />
-    <Compile Include="RulesChecker.cs" />
+    <Compile Include="RuleChecker.cs" />
     <Compile Include="SearchRules\ConstraintsAdd\AreaProperties.cs" />
     <Compile Include="SearchRules\ConstraintsAdd\AreaTypes.cs" />
     <Compile Include="SearchRules\ConstraintsAdd\ConstraintTypes.cs" />

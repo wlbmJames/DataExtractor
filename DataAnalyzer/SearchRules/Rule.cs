@@ -32,8 +32,8 @@ namespace DataAnalyzer.SearchRules
         public SearchResult SearchResult { get; protected set; }
         public virtual void Check(Page page, int pageNumber = -1)
         {
-            var rBuilder = new RulesChecker(page);
-            Rect rect = rBuilder.GetSearchArea(this);
+            var rBuilder = new RuleChecker(this, page);
+            Rect rect = rBuilder.GetSearchArea();
             #region Legacy
             //if (DependencyRule == null || !DependencyRule.SearchResult.IsFound)
             //{
