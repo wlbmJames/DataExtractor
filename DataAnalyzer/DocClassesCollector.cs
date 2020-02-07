@@ -501,11 +501,11 @@ namespace DataAnalyzer
             stAct.SearchConstraints.Add(actBot);
             stAct.SearchConstraints.Add(actRight);
             result.AddHeaderRule(stAct);
-            ActAddData(result);
+            ActAddActData(result);
             return result;
         }
 
-        public static void ActAddData(DocClass docClass)
+        public static void ActAddActData(DocClass docClass)
         {
             var stAct = new StaticTextRule("Act", RuleBinding.Required);
             stAct.TextToSearch = "Акт";
@@ -525,7 +525,91 @@ namespace DataAnalyzer
             stOt.SearchConstraints.Add(otRight);
             stOt.SearchConstraints.Add(otTop);
             stOt.SearchConstraints.Add(otLeft);
-            docClass.AddDataRule(stOt);
+            docClass.AddDataRule(stOt);            
+            
+            var csNum = new CharacterStringRule("ActNumber", RuleBinding.Required);
+            csNum.TextToSearch = @"\d{1,5}";
+            var numBot = new SearchConstraint().Above().Rule("Act").Bot().GetX(1);
+            var numTop = new SearchConstraint().Below().Rule("Act").Top().GetX(-1);
+            var numLeft = new SearchConstraint().RightOf().Rule("Act").Right();
+            var numRight = new SearchConstraint().LeftOf().Rule("ot").Left();
+            csNum.SearchConstraints.Add(numBot);
+            csNum.SearchConstraints.Add(numTop);
+            csNum.SearchConstraints.Add(numLeft);
+            csNum.SearchConstraints.Add(numRight);
+            docClass.AddDataRule(csNum);
+
+            var csDate = new CharacterStringRule("ActDate", RuleBinding.Required);
+            csDate.TextToSearch = @"[\dа-яА-Я\s\.]+";
+            var dateBot = new SearchConstraint().Above().Rule("ot").Bot().GetX(1);
+            var dateTop = new SearchConstraint().Below().Rule("ot").Top().GetX(-1);
+            var dateLeft = new SearchConstraint().RightOf().Rule("ot").Right().GetX(0.1);
+            csDate.SearchConstraints.Add(dateBot);
+            csDate.SearchConstraints.Add(dateTop);
+            csDate.SearchConstraints.Add(dateLeft);
+            docClass.AddDataRule(csDate);
+
+            var stExecutor = new StaticTextRule("Исполнитель", RuleBinding.Required);
+            stExecutor.TextToSearch = "Исполнитель";
+            var execBot = new SearchConstraint().Page().Above().GetX(0.3);
+            var execRight = new SearchConstraint().Page().LeftOf().GetY(0.2);
+            stExecutor.SearchConstraints.Add(execBot);
+            stExecutor.SearchConstraints.Add(execRight);
+            docClass.AddDataRule(stExecutor);
+
+            var stVendor = new StaticTextRule("Заказчик", RuleBinding.Required);
+            stVendor.TextToSearch = "Заказчик";
+            var vendBot = new SearchConstraint().Page().Above().GetX(0.3);
+            var vendRight = new SearchConstraint().Page().LeftOf().GetY(0.2);
+            var vendTop = new SearchConstraint().Rule("Исполнитель").Below().GetX(1);
+            stVendor.SearchConstraints.Add(vendBot);
+            stVendor.SearchConstraints.Add(vendRight);
+            stVendor.SearchConstraints.Add(vendTop);
+            docClass.AddDataRule(stVendor);
+
+            var stExeInn = new StaticTextRule("ИспИНН", RuleBinding.Required);
+            stExeInn.TextToSearch = "ИНН";
+            var eInnTop = new SearchConstraint().Rule("Исполнитель").Below().Top().GetX(-3);
+            var eInnLeft = new SearchConstraint().Rule("Исполнитель").RightOf().Right();
+            var eInnBot = new SearchConstraint().Rule("Исполнитель").Above().Bot().GetX(2.5);
+            stExeInn.SearchConstraints.Add(eInnTop);
+            stExeInn.SearchConstraints.Add(eInnLeft);
+            stExeInn.SearchConstraints.Add(eInnBot);
+            docClass.AddDataRule(stExeInn);
+
+            var stVendInn = new StaticTextRule("ЗакИНН", RuleBinding.Required);
+            stVendInn.TextToSearch = "ИНН";
+            var vInnTop = new SearchConstraint().Rule("Заказчик").Below().Top().GetX(-3);
+            var vInnLeft = new SearchConstraint().Rule("Заказчик").RightOf().Right();
+            var vInnBot = new SearchConstraint().Rule("Заказчик").Above().Bot().GetX(2.5);
+            stVendInn.SearchConstraints.Add(vInnTop);
+            stVendInn.SearchConstraints.Add(vInnLeft);
+            stVendInn.SearchConstraints.Add(vInnBot);
+            docClass.AddDataRule(stVendInn);
+
+            var csEInn = new CharacterStringRule("ИНН исполнителя", RuleBinding.Required);
+            csEInn.TextToSearch = @"\d{9,12}";
+            var EIBot = new SearchConstraint().Above().Rule("ИспИНН").Bot().GetX(0.3);
+            var EITop = new SearchConstraint().Below().Rule("ИспИНН").Top().GetX(-0.3);
+            var EILeft = new SearchConstraint().RightOf().Rule("ИспИНН").Right();
+            var EIRight = new SearchConstraint().LeftOf().Rule("ИспИНН").Right().GetY(5);
+            csEInn.SearchConstraints.Add(EIBot);
+            csEInn.SearchConstraints.Add(EITop);
+            csEInn.SearchConstraints.Add(EILeft);
+            csEInn.SearchConstraints.Add(EIRight);
+            docClass.AddDataRule(csEInn);
+
+            var csVInn = new CharacterStringRule("ИНН заказчика", RuleBinding.Required);
+            csVInn.TextToSearch = @"\d{9,12}";
+            var VIBot = new SearchConstraint().Above().Rule("ЗакИНН").Bot().GetX(0.3);
+            var VITop = new SearchConstraint().Below().Rule("ЗакИНН").Top().GetX(-0.3);
+            var VILeft = new SearchConstraint().RightOf().Rule("ЗакИНН").Right();
+            var VIRight = new SearchConstraint().LeftOf().Rule("ЗакИНН").Right().GetY(5);
+            csVInn.SearchConstraints.Add(VIBot);
+            csVInn.SearchConstraints.Add(VITop);
+            csVInn.SearchConstraints.Add(VILeft);
+            csVInn.SearchConstraints.Add(VIRight);
+            docClass.AddDataRule(csVInn);
         }
         #endregion Act
         public void xxx()
