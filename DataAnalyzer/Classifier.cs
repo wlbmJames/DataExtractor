@@ -1,9 +1,9 @@
 ﻿using ATAPY.Document.Data.Core;
 using DataAnalyzer.Core;
+using DataAnalyzer.SearchRules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataAnalyzer.SearchRules;
 
 namespace DataAnalyzer
 {
@@ -36,7 +36,7 @@ namespace DataAnalyzer
             foreach (var page in document.Pages)
             {
                 var currentPage = page.Index + 1;
-                if(_docStartedObject.DocStarted)
+                if (_docStartedObject.DocStarted)
                 {
                     if (CheckFooter(page))
                     {
@@ -109,7 +109,9 @@ namespace DataAnalyzer
         {
             foreach (var dClass in _classes)
             {
-                var classFound = true;
+                //var checker = new RulesChecker(dClass.HeaderRules, page);
+                //var classFound = checker.Check();
+                var classFound =true;
                 foreach (var rule in dClass.HeaderRules)
                 {
                     rule.Check(page);
@@ -118,6 +120,7 @@ namespace DataAnalyzer
                         || ResultSuccess(sResult) && rule.RuleBinding == RuleBinding.Prohibited)
                         classFound = false;
                 }
+
                 if (classFound)
                 {
                     var result = (DocClass)dClass.Clone();

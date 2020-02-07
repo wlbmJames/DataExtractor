@@ -1,5 +1,5 @@
-﻿using System;
-using DataAnalyzer.SearchRules;
+﻿using DataAnalyzer.SearchRules;
+using System;
 
 namespace DataAnalyzer
 {

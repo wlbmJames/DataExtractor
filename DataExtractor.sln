@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesseractWrapper", "..\Tess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageAnalyzer", "ImageAnalyzer\ImageAnalyzer.csproj", "{9DE05060-14F2-4686-857F-F4B6B4A065F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalyzer_Tests", "DataAnalyzer_Tests\DataAnalyzer_Tests.csproj", "{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,14 @@ Global
 		{9DE05060-14F2-4686-857F-F4B6B4A065F0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9DE05060-14F2-4686-857F-F4B6B4A065F0}.Release|x64.ActiveCfg = Release|Any CPU
 		{9DE05060-14F2-4686-857F-F4B6B4A065F0}.Release|x64.Build.0 = Release|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C9DBE08-42D2-4958-85F8-2A39F83B80D1}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

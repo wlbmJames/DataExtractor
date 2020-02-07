@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DataAnalyzer.SearchRules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataAnalyzer.SearchRules;
 namespace DataAnalyzer.Core
 {
     public class DocClass : ICloneable
@@ -31,7 +31,7 @@ namespace DataAnalyzer.Core
         {
             DataRules.Add(rule);
             rule.Parent = DataRules;
-        }        
+        }
         public void AddFooterRule(Rule rule)
         {
             FooterRules.Add(rule);
@@ -42,10 +42,10 @@ namespace DataAnalyzer.Core
             var head = CloneWDependencies(HeaderRules);
             var footer = CloneWDependencies(FooterRules);
             var data = CloneWDependencies(DataRules);
-            return new DocClass(Title, MaxPagesCount) 
-            { 
-                HeaderRules = head, 
-                FooterRules = footer, 
+            return new DocClass(Title, MaxPagesCount)
+            {
+                HeaderRules = head,
+                FooterRules = footer,
                 DataRules = data,
             };
         }

@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAnalyzer.SearchRules
+namespace DataAnalyzer.SearchRules.ConstraintsAdd
 {
-    public enum RelationType
+    public enum AreaProperties
     {
-        Left,
-        Top,
-        Right,
-        Bot,
-        None
+        Height,
+        Width,
     }
 }

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAnalyzer.SearchRules.ConstraintsAdd;
+using System;
 
 namespace DataAnalyzer.SearchRules
 {
-    public class Relation: ICloneable
+    public class Relation : ICloneable
     {
         public Relation()
         {
-            Type = RelationType.None;
+            Type = RelationTypes.None;
             Offset = 1;
         }
-        public RelationType Type { get; set; }
+        public RelationTypes Type { get; set; }
         public int Offset { get; set; }
 
         public object Clone()

@@ -153,7 +153,7 @@ namespace TextExtractor
                             int charIter = 0;
                             do
                             {
-                                if (resultIterator.TryGetBoundingBox(PageIteratorLevel.Symbol, out var sRect)) ;
+                                if (resultIterator.TryGetBoundingBox(PageIteratorLevel.Symbol, out var sRect)) 
                                 chars[charIter] = GetRect(sRect);
                                 charIter++;
                             } while (resultIterator.Next(PageIteratorLevel.Word, PageIteratorLevel.Symbol));

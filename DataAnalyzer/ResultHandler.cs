@@ -14,11 +14,11 @@ namespace DataAnalyzer
             result.NumberOfPages = document.Document.Pages.Count;
             foreach (var rule in document.DocClass.DataRules)
             {
-                if(rule is CharacterStringRule && rule.SearchResult != null && rule.SearchResult.IsFound)
+                if (rule is CharacterStringRule && rule.SearchResult != null && rule.SearchResult.IsFound)
                 {
-                    result.Data.Add(new NamedResult() { Title = rule.Title, Result = rule.SearchResult});
+                    result.Data.Add(new NamedResult() { Title = rule.Title, Result = rule.SearchResult });
                 }
-                if(rule is RepeatingCSRule && rule.SearchResult != null && rule.SearchResult.IsFound)
+                if (rule is RepeatingCSRule && rule.SearchResult != null && rule.SearchResult.IsFound)
                 {
                     result.TableData.Add(new NamedResult() { Title = rule.Title, Result = rule.SearchResult });
                 }

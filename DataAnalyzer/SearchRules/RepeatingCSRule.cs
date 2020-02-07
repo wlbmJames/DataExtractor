@@ -1,7 +1,7 @@
 ﻿using ATAPY.Document.Data.Core;
+using DataAnalyzer.Extensions;
 using System.Linq;
 using System.Windows;
-using DataAnalyzer.Extensions;
 
 namespace DataAnalyzer.SearchRules
 {
@@ -14,7 +14,7 @@ namespace DataAnalyzer.SearchRules
         {
         }
 
-        public RepeatingCSRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title,"", ruleBinding, searchArea)
+        public RepeatingCSRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title, "", ruleBinding, searchArea)
         {
         }
         public override void Check(Page page, int pageNumber = -1)
@@ -97,7 +97,7 @@ namespace DataAnalyzer.SearchRules
                 PreviousInstance = this,
                 Parent = this.Parent,
                 InterlineSpaces = this.InterlineSpaces
-                
+
             };
         }
         public override object Clone()

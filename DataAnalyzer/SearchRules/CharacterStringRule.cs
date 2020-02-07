@@ -1,11 +1,5 @@
-﻿using ATAPY.Document.Data.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using DataAnalyzer.Extensions;
 
 namespace DataAnalyzer.SearchRules
 {
@@ -15,7 +9,7 @@ namespace DataAnalyzer.SearchRules
         {
         }
 
-        public CharacterStringRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title,"", ruleBinding, searchArea)
+        public CharacterStringRule(string title, RuleBinding ruleBinding, Rect searchArea) : base(title, "", ruleBinding, searchArea)
         {
         }
 
@@ -25,7 +19,8 @@ namespace DataAnalyzer.SearchRules
             {
                 SearchResult = (SearchResult)this.SearchResult?.Clone(),
                 TextToSearch = this.TextToSearch,
-                DependencyArea = (DependencyArea)this.DependencyArea?.Clone()
+                DependencyArea = (DependencyArea)this.DependencyArea?.Clone(),
+                SearchConstraints = this.SearchConstraints.Select(t => t.Clone() as SearchConstraint).ToList()
             };
         }
 
