@@ -57,13 +57,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ATAPY.Document.Data.Core\ATAPY.Document.Data.Core.csproj">
+      <Project>{cb0be638-8c70-46cd-a8e8-6969e4a37760}</Project>
+      <Name>ATAPY.Document.Data.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAnalyzer\DataAnalyzer.csproj">
       <Project>{29f4da05-8200-48af-8393-55ee45526d4f}</Project>
       <Name>DataAnalyzer</Name>
-    </ProjectReference>
-    <ProjectReference Include="D:\Tests\Source\ATAPY.Document.Data.Core\ATAPY.Document.Data.Core.csproj">
-      <Project>{cb0be638-8c70-46cd-a8e8-6969e4a37760}</Project>
-      <Name>ATAPY.Document.Data.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

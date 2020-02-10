@@ -83,17 +83,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TesseractWrapper\TesseractWrapper\TesseractWrapper.csproj">
-      <Project>{e2cf9ad6-e421-4c83-8a40-eb446f09ec15}</Project>
-      <Name>TesseractWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="D:\Tests\Source\ATAPY.Document.Data.Core\ATAPY.Document.Data.Core.csproj">
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATAPY.Document.Data.Core\ATAPY.Document.Data.Core.csproj">
       <Project>{cb0be638-8c70-46cd-a8e8-6969e4a37760}</Project>
       <Name>ATAPY.Document.Data.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <ProjectReference Include="..\TesseractWrapper\TesseractWrapper.csproj">
+      <Project>{f0537f49-cfc3-4b03-b238-7f0623893e7b}</Project>
+      <Name>TesseractWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

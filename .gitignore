@@ -339,3 +339,7 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 GDPictureLibs/
+
+# Including core libs
+!/ATAPY.Common/*.dll
+!/ATAPY.Common/*.pdb

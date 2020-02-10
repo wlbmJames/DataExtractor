@@ -93,11 +93,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\Tests\Source\ATAPY.Document.Data.Core\ATAPY.Document.Data.Core.csproj">
+    <ProjectReference Include="..\ATAPY.Document.Data.Core\ATAPY.Document.Data.Core.csproj">
       <Project>{cb0be638-8c70-46cd-a8e8-6969e4a37760}</Project>
       <Name>ATAPY.Document.Data.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
