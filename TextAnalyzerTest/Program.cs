@@ -16,7 +16,7 @@ namespace TextAnalyzerTest
             //var dir = @"D:\Projects\TessWrapper\tesseract";
             //System.IO.Directory.SetCurrentDirectory(dir);
             //var imageName = @"D:\Projects\TextLayerAnalyzer\Samples\Bupa\{imageName}.tif";
-            var imageName = "2020-01-01-Акт-Счет";
+            var imageName = "2019-11-ээ";
             var document = GetDoc(imageName);
             var dClassifier = new Classifier();
             //dClassifier.AddClass(DocClassesCollector.TawuniaLegacy());
@@ -31,7 +31,7 @@ namespace TextAnalyzerTest
                 var model = ResultHandler.GetResultModel(doc);
                 models.Add(model);
             }
-            var resPath = $@"111.xml";
+            var resPath = $@"112.xml";
             //var resPath = $@"D:\Projects\TextLayerAnalyzer\{imageName}.xml";
             ResultHandler.SaveModel(models, resPath);
         }

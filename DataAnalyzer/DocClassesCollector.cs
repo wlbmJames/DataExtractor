@@ -587,6 +587,38 @@ namespace DataAnalyzer
             stVendInn.SearchConstraints.Add(vInnBot);
             docClass.AddDataRule(stVendInn);
 
+            var csExecName = new CharacterStringRule("Наименование исполнителя", RuleBinding.Required);
+            csExecName.TextToSearch = @".+";
+            var ENBot = new SearchConstraint().Above().Rule("ИспИНН").Bot().GetX(0.3);
+            var ENTop = new SearchConstraint().Below().Rule("ИспИНН").Top().GetX(-0.3);
+            var ENLeft = new SearchConstraint().RightOf().Rule("Исполнитель").Right();
+            var ENRight = new SearchConstraint().LeftOf().Rule("ИспИНН").Left().GetX(-0.2);
+            var ENTop2 = new SearchConstraint().Rule("Исполнитель").Below().Top().GetX(-3);
+            var ENBot2 = new SearchConstraint().Rule("Заказчик").Above().Top().GetX(1);
+            csExecName.SearchConstraints.Add(ENBot);
+            csExecName.SearchConstraints.Add(ENTop);
+            csExecName.SearchConstraints.Add(ENLeft);
+            csExecName.SearchConstraints.Add(ENRight);
+            csExecName.SearchConstraints.Add(ENTop2);
+            csExecName.SearchConstraints.Add(ENBot2);
+            docClass.AddDataRule(csExecName);
+
+            var csVendName = new CharacterStringRule("Наименование заказчика", RuleBinding.Required);
+            csVendName.TextToSearch = @".+";
+            var VNBot = new SearchConstraint().Above().Rule("ЗакИНН").Bot().GetX(0.3);
+            var VNTop = new SearchConstraint().Below().Rule("ЗакИНН").Top().GetX(-0.3);
+            var VNLeft = new SearchConstraint().RightOf().Rule("Заказчик").Right();
+            var VNRight = new SearchConstraint().LeftOf().Rule("ЗакИНН").Left().GetX(-0.2);
+            var VNTop2 = new SearchConstraint().Rule("Исполнитель").Below().Bot().GetX(0.5);
+            var VNBot2 = new SearchConstraint().Rule("Заказчик").Above().Bot().GetX(1.5);
+            csVendName.SearchConstraints.Add(VNBot);
+            csVendName.SearchConstraints.Add(VNTop);
+            csVendName.SearchConstraints.Add(VNLeft);
+            csVendName.SearchConstraints.Add(VNRight);
+            csVendName.SearchConstraints.Add(VNTop2);
+            csVendName.SearchConstraints.Add(VNBot2);
+            docClass.AddDataRule(csVendName);
+
             var csEInn = new CharacterStringRule("ИНН исполнителя", RuleBinding.Required);
             csEInn.TextToSearch = @"\d{9,12}";
             var EIBot = new SearchConstraint().Above().Rule("ИспИНН").Bot().GetX(0.3);
@@ -610,6 +642,27 @@ namespace DataAnalyzer
             csVInn.SearchConstraints.Add(VILeft);
             csVInn.SearchConstraints.Add(VIRight);
             docClass.AddDataRule(csVInn);
+
+            var stTotal = new StaticTextRule("ИтогоСТ", RuleBinding.Required);
+            stTotal.TextToSearch = "Итого";
+            var totalTop = new SearchConstraint().Rule("Заказчик").Below().Bot().GetY(1);
+            var totalLeft = new SearchConstraint().RightOf().Page().XCenter();
+            stTotal.SearchConstraints.Add(totalTop);
+            stTotal.SearchConstraints.Add(totalLeft);
+            docClass.AddDataRule(stTotal);
+
+            var csTotal = new CharacterStringRule("Итого", RuleBinding.Required);
+            csTotal.TextToSearch = @"(\d+[\.,\s])+(\d{2})";
+            var csTotBot = new SearchConstraint().Above().Rule("ИтогоСТ").Bot().GetX(0.3);
+            var csTotTop = new SearchConstraint().Below().Rule("ИтогоСТ").Top().GetX(-0.3);
+            var csTotLeft = new SearchConstraint().RightOf().Rule("ИтогоСТ").Right();
+            var csTotRight = new SearchConstraint().LeftOf().Rule("ИтогоСТ").Right().GetY(5);
+            csTotal.SearchConstraints.Add(csTotBot);
+            csTotal.SearchConstraints.Add(csTotTop);
+            csTotal.SearchConstraints.Add(csTotLeft);
+            csTotal.SearchConstraints.Add(csTotRight);
+            docClass.AddDataRule(csTotal);
+
         }
         #endregion Act
         public void xxx()

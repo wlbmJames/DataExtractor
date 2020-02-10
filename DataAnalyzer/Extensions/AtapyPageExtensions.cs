@@ -9,11 +9,13 @@ namespace DataAnalyzer.Extensions
     {
         public static List<Words> FindWords(this Page page, Rect Area, string SearchPattern)
         {
+            //var lines = page.TextLines.Where(l => Area.Contains(l.Bound)).ToList();
             var lines = page.TextLines.Where(l => l.Bound.IntersectsWith(Area)).ToList();
             List<Words> result = new List<Words>();
             foreach (var line in lines)
             {
-                List<Word> wordsInArea = line.Where(w => w.Bound.IntersectsWith(Area)).ToList();
+                List<Word> wordsInArea = line.Where(w => Area.Contains(w.Bound)).ToList();
+                //List<Word> wordsInArea = line.Where(w => w.Bound.IntersectsWith(Area)).ToList();
                 if (wordsInArea.Count < 1)
                     continue;
                 wordsInArea.Sort((x, y) => x.Bound.Left.CompareTo(y.Bound.Left));
